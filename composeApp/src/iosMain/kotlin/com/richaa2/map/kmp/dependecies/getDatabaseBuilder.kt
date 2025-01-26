@@ -9,16 +9,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 
 
-fun getDatabaseBuilder(): RoomDatabase.Builder<LocationDatabase> {
-    val dbFilePath = NSHomeDirectory() + "/my_room.db"
-    return Room.databaseBuilder<LocationDatabase>(
-        name = dbFilePath,
-        factory =  { LocationDatabase::class.instantiateImpl() }
-    )
-.setDriver(BundledSQLiteDriver())
-.setQueryCoroutineContext(Dispatchers.IO)
-}
-
-fun getDatabase(): LocationDatabase {
-    return getDatabaseBuilder().build()
-}
+//fun getDatabaseBuilder(): RoomDatabase.Builder<LocationDatabase> {
+//    val dbFilePath = NSHomeDirectory() + "/my_room.db"
+//    return Room.databaseBuilder<LocationDatabase>(
+//        name = dbFilePath,
+//        factory =  { LocationDatabase::class.instantiateImpl() }
+//    )
+//.setDriver(BundledSQLiteDriver())
+//.setQueryCoroutineContext(Dispatchers.IO)
+//}
+//
+//fun getDatabase(): LocationDatabase {
+//    return getDatabaseBuilder().build()
+//}

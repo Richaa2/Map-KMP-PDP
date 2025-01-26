@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.richaa2.map.kmp.dependecies.AddLocationViewModel
 import com.richaa2.map.kmp.dependecies.MapViewModel
-import com.richaa2.map.kmp.dependecies.MyViewModel
+import com.richaa2.map.kmp.presentation.map.MapScreen
 import com.richaa2.mappdp.presentation.locationDetails.LocationDetailsViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -26,25 +26,19 @@ import org.koin.core.annotation.KoinExperimentalAPI
 @Composable
 @Preview
 fun App() {
-    val viewModel = koinViewModel<MyViewModel>()
-    val mapViewModel = koinViewModel<MapViewModel>()
-    val secVM = koinViewModel<AddLocationViewModel>()
-    val thrVM = koinViewModel<LocationDetailsViewModel>()
 
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Hello, ${viewModel.getHelloWorldString()}")
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+        //TODO BUILD FAILED WITH ROOM
+//        val mapViewModel = koinViewModel<MapViewModel>()
+        MapScreen(
+//            viewModel = mapViewModel,
+            onAddLocation = { latLong ->
+                println("onAddLocation LatLong: $latLong")
+            },
+            onLocationDetails = { locationInfo ->
+                println("onLocationDetails LocationInfo: $locationInfo")
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }
-        }
+
+        )
     }
 }
