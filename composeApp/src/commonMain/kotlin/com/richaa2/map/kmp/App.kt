@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.richaa2.map.kmp.dependecies.AddLocationViewModel
 import com.richaa2.map.kmp.dependecies.MapViewModel
+import com.richaa2.map.kmp.presentation.map.CleanMapScreen
 import com.richaa2.map.kmp.presentation.map.MapScreen
 import com.richaa2.mappdp.presentation.locationDetails.LocationDetailsViewModel
 import org.jetbrains.compose.resources.painterResource
@@ -30,6 +31,7 @@ fun App() {
     MaterialTheme {
         //TODO BUILD FAILED WITH ROOM
 //        val mapViewModel = koinViewModel<MapViewModel>()
+//        CleanMapScreen()
         MapScreen(
 //            viewModel = mapViewModel,
             onAddLocation = { latLong ->
@@ -38,7 +40,6 @@ fun App() {
             onLocationDetails = { locationInfo ->
                 println("onLocationDetails LocationInfo: $locationInfo")
             }
-
         )
     }
 }

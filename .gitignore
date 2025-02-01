@@ -16,3 +16,10 @@ captures
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+/iosApp/Pods/
+
+/iosApp/Podfile.lock
+/composeApp/composeApp.podspec
+/iosApp/iosApp.xcworkspace/contents.xcworkspacedata
+/composeApp/schemas/com.richaa2.map.kmp.data.source.local.LocationDatabase/1.json
+/composeApp/schemas/com.richaa2.mappdp.data.source.local.LocationDatabase/1.json
