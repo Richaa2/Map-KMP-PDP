@@ -1,4 +1,3 @@
-
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -6,7 +5,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.room)
+//    alias(libs.plugins.room)
     alias(libs.plugins.ksp)
     alias(libs.plugins.secrets)
     alias(libs.plugins.kotlinCocoapods)
@@ -14,7 +13,9 @@ plugins {
 }
 
 kotlin {
-
+    sourceSets.commonMain {
+        kotlin.srcDir("build/generated/ksp/metadata")
+    }
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
@@ -54,6 +55,7 @@ kotlin {
         }
 
     }
+
     sourceSets {
 
         androidMain.dependencies {
@@ -90,7 +92,9 @@ kotlin {
         }
     }
 }
-
+//ksp {
+//    arg("room.schemaLocation", "${projectDir}/schemas")
+//}
 android {
 
     namespace = "com.richaa2.map.kmp"
@@ -123,21 +127,29 @@ android {
     }
 }
 
-room {
-    schemaDirectory("$projectDir/schemas")
-}
+//room {
+//    schemaDirectory("$projectDir/schemas")
+//}
 dependencies {
 //    implementation(libs.play.services.maps)
 //    implementation(libs.androidx.material3.android)
 //    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
-//    add("kspAndroid", libs.androidx.room.compiler)
-//    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
-//    add("iosX64", libs.androidx.room.compiler)
-//    add("kspIosArm64", libs.androidx.room.compiler)
+//    ksp(libs.androidx.room.compiler)
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
+    add("kspCommonMainMetadata", libs.androidx.room.compiler)
+
+
 }
-
-
+ksp {
+    arg("room.schemaLocation", "${projectDir}/schemas")
+}
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
+    if (name != "kspCommonMainKotlinMetadata" ) {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}
 secrets {
     propertiesFileName = "secrets.properties"
     defaultPropertiesFileName = "secrets.defaults.properties"

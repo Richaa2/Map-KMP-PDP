@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
 import com.richaa2.map.kmp.dependecies.AddLocationViewModel
 import com.richaa2.map.kmp.dependecies.MapViewModel
 import com.richaa2.map.kmp.presentation.map.CleanMapScreen
@@ -27,10 +28,10 @@ import org.koin.core.annotation.KoinExperimentalAPI
 @Composable
 @Preview
 fun App() {
-
     MaterialTheme {
         //TODO BUILD FAILED WITH ROOM
-//        val mapViewModel = koinViewModel<MapViewModel>()
+//        val mapViewModel = koinViewModel<TestViewModel>()
+        val mapViewModel = koinViewModel<MapViewModel>()
 //        CleanMapScreen()
         MapScreen(
 //            viewModel = mapViewModel,
@@ -42,4 +43,8 @@ fun App() {
             }
         )
     }
+}
+
+class TestViewModel(): ViewModel() {
+
 }

@@ -2,14 +2,13 @@ package com.richaa2.mappdp.data.repository
 
 import com.richaa2.mappdp.core.common.ErrorHandler
 import com.richaa2.mappdp.data.mapper.LocationMapper
-import com.richaa2.mappdp.data.source.local.LocationDao
+import com.richaa2.map.kmp.data.source.local.LocationDao
 import com.richaa2.mappdp.domain.common.Resource
 import com.richaa2.mappdp.domain.model.LocationInfo
 import com.richaa2.mappdp.domain.repository.LocationRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 
 
@@ -32,17 +31,18 @@ class LocationRepositoryImpl  constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getSavedLocationsInfo(): Flow<Resource<List<LocationInfo>>> {
-        return locationDao.getAllLocations()
-            .flatMapLatest { entities ->
-                flow {
-                    emit(Resource.Loading)
-                    val locations = entities.map { entity -> mapper.fromEntityToDomain(entity) }
-                    emit(Resource.Success(locations))
-                }
-            }
-            .catch { e ->
-                emit(Resource.Error(errorHandler.getErrorMessage(e), e))
-            }
+        return flow {  }
+//        return locationDao.getAllLocations()
+//            .flatMapLatest { entities ->
+//                flow {
+//                    emit(Resource.Loading)
+//                    val locations = entities.map { entity -> mapper.fromEntityToDomain(entity) }
+//                    emit(Resource.Success(locations))
+//                }
+//            }
+//            .catch { e ->
+//                emit(Resource.Error(errorHandler.getErrorMessage(e), e))
+//            }
     }
 
     override suspend fun upsertLocation(locationInfo: LocationInfo): Resource<Unit> {

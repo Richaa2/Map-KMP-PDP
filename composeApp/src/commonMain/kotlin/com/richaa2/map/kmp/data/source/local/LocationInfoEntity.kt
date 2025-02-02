@@ -1,4 +1,4 @@
-package com.richaa2.mappdp.data.source.local
+package com.richaa2.map.kmp.data.source.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

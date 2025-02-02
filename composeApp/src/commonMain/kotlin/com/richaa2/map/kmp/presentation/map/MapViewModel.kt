@@ -63,22 +63,22 @@ class MapViewModel  constructor(
 
     private fun loadSavedLocations() {
         viewModelScope.launch {
-            getSavedLocationsInfoUseCase().collect { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        val locations = result.data
-                        _uiState.value = MapUiState.Success(locations)
-                    }
-
-                    is Resource.Error -> {
-                        _errorState.value = result.message
-                    }
-
-                    is Resource.Loading -> {
-                        _uiState.value = MapUiState.Loading
-                    }
-                }
-            }
+//            getSavedLocationsInfoUseCase().collect { result ->
+//                when (result) {
+//                    is Resource.Success -> {
+//                        val locations = result.data
+//                        _uiState.value = MapUiState.Success(locations)
+//                    }
+//
+//                    is Resource.Error -> {
+//                        _errorState.value = result.message
+//                    }
+//
+//                    is Resource.Loading -> {
+//                        _uiState.value = MapUiState.Loading
+//                    }
+//                }
+//            }
         }
     }
 

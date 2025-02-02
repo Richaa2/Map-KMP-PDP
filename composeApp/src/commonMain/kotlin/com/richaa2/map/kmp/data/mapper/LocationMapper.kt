@@ -1,6 +1,6 @@
 package com.richaa2.mappdp.data.mapper
 
-import com.richaa2.mappdp.data.source.local.LocationInfoEntity
+import com.richaa2.map.kmp.data.source.local.LocationInfoEntity
 import com.richaa2.mappdp.domain.model.LocationInfo
 
 
