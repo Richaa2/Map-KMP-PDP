@@ -1,8 +1,8 @@
-//package com.richaa2.mappdp.presentation.model
+package com.richaa2.map.kmp.presentation.model//package com.richaa2.mappdp.presentation.model
 //
 //import com.google.android.gms.maps.model.LatLng
 //import com.google.maps.android.clustering.ClusterItem
-//import com.richaa2.mappdp.domain.model.LocationInfo
+//import com.richaa2.map.kmp.domain.model.LocationInfo
 //
 //class LocationClusterItem(
 //    val locationInfo: LocationInfo

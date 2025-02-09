@@ -1,0 +1,33 @@
+CREATE TABLE locations_info (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    latitude REAL NOT NULL,
+    longitude REAL NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT,
+    imageUrl TEXT
+);
+insertLocation:
+INSERT INTO locations_info(latitude, longitude, title, description, imageUrl)
+VALUES (?, ?, ?, ?, ?);
+
+updateLocation:
+UPDATE locations_info
+SET latitude = ?,
+    longitude = ?,
+    title = ?,
+    description = ?,
+    imageUrl = ?
+WHERE id = ?;
+
+
+deleteLocationById:
+DELETE FROM locations_info WHERE id = ?;
+
+getLocationById:
+SELECT * FROM locations_info WHERE id = ?;
+
+getAllLocations:
+SELECT * FROM locations_info;
+
+isExist:
+SELECT EXISTS(SELECT 1 FROM locations_info WHERE id = ?);

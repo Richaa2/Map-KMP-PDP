@@ -19,7 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.presentation.map.components.MapFloatingActionButton
-import com.richaa2.mappdp.domain.model.LocationInfo
+import com.richaa2.map.kmp.domain.model.LocationInfo
 
 
 @OptIn(ExperimentalMaterial3Api::class)

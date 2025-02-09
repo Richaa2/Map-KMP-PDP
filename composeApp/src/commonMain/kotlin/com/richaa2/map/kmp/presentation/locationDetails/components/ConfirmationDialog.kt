@@ -1,4 +1,4 @@
-package com.richaa2.mappdp.presentation.locationDetails.components
+package com.richaa2.map.kmp.presentation.locationDetails.components
 
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text

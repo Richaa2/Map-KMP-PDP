@@ -1,4 +1,4 @@
-//package com.richaa2.mappdp.presentation.map
+package com.richaa2.map.kmp.presentation.map//package com.richaa2.mappdp.presentation.map
 //
 //import android.Manifest
 //import android.content.Context
@@ -43,11 +43,11 @@
 //import com.google.maps.android.compose.MapProperties
 //import com.google.maps.android.compose.MapUiSettings
 //import com.google.maps.android.compose.rememberCameraPositionState
-//import com.richaa2.map.kmp.dependecies.MapViewModel
+//import com.richaa2.map.kmp.presentation.map.MapViewModel
 //import com.richaa2.mappdp.R
 //import com.richaa2.mappdp.designsystem.components.LoadingContent
 //import com.richaa2.mappdp.designsystem.theme.MapPDPTheme
-//import com.richaa2.mappdp.domain.model.LocationInfo
+//import com.richaa2.map.kmp.domain.model.LocationInfo
 //import com.richaa2.mappdp.presentation.map.components.LocationClustering
 //import com.richaa2.map.kmp.presentation.map.components.MapFloatingActionButton
 //import com.richaa2.mappdp.presentation.map.components.PermissionDeniedDialog

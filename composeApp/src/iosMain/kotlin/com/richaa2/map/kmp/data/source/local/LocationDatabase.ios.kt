@@ -1,14 +1,5 @@
 package com.richaa2.map.kmp.data.source.local
 
-import DbClient
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.RoomDatabaseConstructor
-import kotlinx.cinterop.ExperimentalForeignApi
-import platform.Foundation.NSDocumentDirectory
-import platform.Foundation.NSFileManager
-import platform.Foundation.NSUserDomainMask
-
 
 //
 //actual object LocationDatabaseConstructor : RoomDatabaseConstructor<LocationDatabase> {

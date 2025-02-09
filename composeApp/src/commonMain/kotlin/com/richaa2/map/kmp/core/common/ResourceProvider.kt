@@ -1,4 +1,4 @@
-package com.richaa2.mappdp.core.common
+package com.richaa2.map.kmp.core.common
 
 interface ResourceProvider {
     fun getString(resId: Int): String

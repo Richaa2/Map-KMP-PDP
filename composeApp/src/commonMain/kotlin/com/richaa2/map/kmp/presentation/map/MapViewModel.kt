@@ -1,12 +1,9 @@
-package com.richaa2.map.kmp.dependecies
+package com.richaa2.map.kmp.presentation.map
 
-import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.richaa2.mappdp.core.common.ResourceProvider
-import com.richaa2.mappdp.domain.common.Resource
-import com.richaa2.mappdp.domain.model.LocationInfo
-import com.richaa2.mappdp.domain.usecase.GetSavedLocationsInfoUseCase
+import com.richaa2.map.kmp.domain.model.LocationInfo
+import com.richaa2.map.kmp.domain.usecase.GetSavedLocationsInfoUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +27,7 @@ class MapViewModel  constructor(
 
     init {
         loadSavedLocations()
+        getSavedLocationsInfoUseCase()
     }
 
     //    @SuppressLint("MissingPermission")

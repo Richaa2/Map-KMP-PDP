@@ -1,4 +1,4 @@
-//package com.richaa2.mappdp.presentation.locationDetails
+package com.richaa2.map.kmp.presentation.locationDetails//package com.richaa2.mappdp.presentation.locationDetails
 //
 //import androidx.compose.foundation.Image
 //import androidx.compose.foundation.background
@@ -51,8 +51,8 @@
 //import com.richaa2.mappdp.designsystem.components.LoadingContent
 //import com.richaa2.mappdp.designsystem.components.NotFoundContent
 //import com.richaa2.mappdp.designsystem.theme.MapPDPTheme
-//import com.richaa2.mappdp.domain.model.LocationInfo
-//import com.richaa2.mappdp.presentation.locationDetails.components.ConfirmationDialog
+//import com.richaa2.map.kmp.domain.model.LocationInfo
+//import com.richaa2.map.kmp.presentation.locationDetails.components.ConfirmationDialog
 //import com.richaa2.mappdp.utils.base64ToBitmap
 //import kotlinx.coroutines.flow.collectLatest
 //import org.koin.compose.viewmodel.koinViewModel

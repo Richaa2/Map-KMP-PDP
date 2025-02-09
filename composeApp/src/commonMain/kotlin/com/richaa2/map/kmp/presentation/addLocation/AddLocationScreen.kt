@@ -1,4 +1,4 @@
-//package com.richaa2.mappdp.presentation.addLocation
+package com.richaa2.map.kmp.presentation.addLocation//package com.richaa2.mappdp.presentation.addLocation
 //
 //import androidx.compose.foundation.layout.Arrangement
 //import androidx.compose.foundation.layout.Column
@@ -42,12 +42,12 @@
 //import androidx.compose.ui.tooling.preview.Preview
 //import androidx.compose.ui.unit.dp
 //import androidx.hilt.navigation.compose.hiltViewModel
-//import com.richaa2.map.kmp.dependecies.AddLocationViewModel
+//import com.richaa2.map.kmp.presentation.addLocation.AddLocationViewModel
 //import com.richaa2.mappdp.R
 //import com.richaa2.mappdp.designsystem.components.LoadingContent
 //import com.richaa2.mappdp.designsystem.theme.MapPDPTheme
 //import com.richaa2.mappdp.presentation.addLocation.components.ImagePicker
-//import com.richaa2.mappdp.presentation.addLocation.utils.MAX_TITLE_LENGTH
+//import com.richaa2.map.kmp.presentation.addLocation.utils.MAX_TITLE_LENGTH
 //import com.richaa2.mappdp.utils.byteArrayToBitmap
 //import kotlinx.coroutines.flow.collectLatest
 //import org.koin.compose.viewmodel.koinViewModel

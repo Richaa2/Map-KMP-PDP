@@ -1,7 +1,7 @@
-package com.richaa2.mappdp.domain.model
+package com.richaa2.map.kmp.domain.model
 
 data class LocationInfo(
-    val id: Long = 0,
+    val id: Long? = null,
     val latitude: Double,
     val longitude: Double,
     val title: String,

@@ -1,15 +1,12 @@
-package com.richaa2.map.kmp.dependecies
+package com.richaa2.map.kmp.presentation.addLocation
 
-import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.richaa2.mappdp.core.common.ResourceProvider
-import com.richaa2.mappdp.domain.common.Resource
-import com.richaa2.mappdp.domain.model.LocationInfo
-import com.richaa2.mappdp.domain.usecase.GetLocationInfoUseCase
-import com.richaa2.mappdp.domain.usecase.SaveLocationInfoUseCase
-import com.richaa2.mappdp.domain.usecase.UpdateLocationInfoUseCase
-import com.richaa2.mappdp.presentation.addLocation.AddLocationFormState
+import com.richaa2.map.kmp.domain.common.Resource
+import com.richaa2.map.kmp.domain.model.LocationInfo
+import com.richaa2.map.kmp.domain.usecase.GetLocationInfoUseCase
+import com.richaa2.map.kmp.domain.usecase.SaveLocationInfoUseCase
+import com.richaa2.map.kmp.domain.usecase.UpdateLocationInfoUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -42,7 +39,7 @@ class AddLocationViewModel  constructor(
     fun initLocationInfo(locationId: Long?) {
         viewModelScope.launch {
             locationId?.let {
-                getLocationInfoUseCase(locationId).collect { result ->
+                getLocationInfoUseCase(locationId).let { result ->
                     when (result) {
                         is Resource.Error -> {
                             _errorState.value = result.message

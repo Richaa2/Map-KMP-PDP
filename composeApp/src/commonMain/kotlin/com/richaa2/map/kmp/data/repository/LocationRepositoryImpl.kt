@@ -1,54 +1,57 @@
-package com.richaa2.mappdp.data.repository
+package com.richaa2.map.kmp.data.repository
 
-import com.richaa2.mappdp.core.common.ErrorHandler
-import com.richaa2.mappdp.data.mapper.LocationMapper
-import com.richaa2.map.kmp.data.source.local.LocationDao
-import com.richaa2.mappdp.domain.common.Resource
-import com.richaa2.mappdp.domain.model.LocationInfo
-import com.richaa2.mappdp.domain.repository.LocationRepository
+import com.richaa2.map.kmp.data.source.local.LocationDataSource
+import com.richaa2.map.kmp.core.common.ErrorHandler
+import com.richaa2.map.kmp.data.mapper.LocationMapper.fromEntityToDomain
+import com.richaa2.map.kmp.domain.common.Resource
+import com.richaa2.map.kmp.domain.model.LocationInfo
+import com.richaa2.map.kmp.domain.repository.LocationRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 
 
-class LocationRepositoryImpl  constructor(
-    private val locationDao: LocationDao,
-    private val mapper: LocationMapper,
+class LocationRepositoryImpl(
+    private val locationDataSource: LocationDataSource,
     private val errorHandler: ErrorHandler,
 ) : LocationRepository {
 
-    override fun getLocationInfoById(id: Long): Flow<Resource<LocationInfo?>> {
-        return flow {
-            emit(Resource.Loading)
-            val entity = locationDao.getLocationById(id)
-            val locationInfo = entity?.let { mapper.fromEntityToDomain(entity) }
-            emit(Resource.Success(locationInfo))
-        }.catch { e ->
-            emit(Resource.Error(errorHandler.getErrorMessage(e), e))
+    override suspend fun getLocationInfoById(id: Long): Resource<LocationInfo?> {
+        return withContext(Dispatchers.IO) {
+            try {
+                Resource.Success(locationDataSource.getLocationById(id)?.fromEntityToDomain())
+            } catch (e: Exception) {
+                Resource.Error(errorHandler.getErrorMessage(e), e)
+            }
         }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getSavedLocationsInfo(): Flow<Resource<List<LocationInfo>>> {
-        return flow {  }
-//        return locationDao.getAllLocations()
-//            .flatMapLatest { entities ->
-//                flow {
-//                    emit(Resource.Loading)
-//                    val locations = entities.map { entity -> mapper.fromEntityToDomain(entity) }
-//                    emit(Resource.Success(locations))
-//                }
-//            }
-//            .catch { e ->
-//                emit(Resource.Error(errorHandler.getErrorMessage(e), e))
-//            }
+        return locationDataSource.getAllLocations()
+            .flatMapLatest { entities ->
+                flow {
+                    emit(Resource.Loading)
+                    val locations = entities.map { entity -> entity.fromEntityToDomain() }
+                    emit(Resource.Success(locations))
+                }
+            }.catch { e ->
+                emit(Resource.Error(errorHandler.getErrorMessage(e), e))
+            }
     }
 
     override suspend fun upsertLocation(locationInfo: LocationInfo): Resource<Unit> {
         return try {
-            val entity = mapper.fromDomainToEntity(locationInfo)
-            locationDao.upsertLocation(entity)
+            if (locationInfo.id?.let { locationDataSource.isExistLocationById(it) } == true) {
+                locationDataSource.updateLocation(locationInfo)
+            } else {
+                locationDataSource.insertLocation(locationInfo)
+            }
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(errorHandler.getErrorMessage(e), e)
@@ -57,7 +60,7 @@ class LocationRepositoryImpl  constructor(
 
     override suspend fun deleteLocationInfoById(id: Long): Resource<Unit> {
         return try {
-            locationDao.deleteLocationById(id)
+            locationDataSource.deleteLocationById(id)
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(errorHandler.getErrorMessage(e), e)

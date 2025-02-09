@@ -1,4 +1,4 @@
-//package com.richaa2.mappdp.presentation.map.components
+package com.richaa2.map.kmp.presentation.map.components//package com.richaa2.mappdp.presentation.map.components
 //
 //import androidx.compose.foundation.BorderStroke
 //import androidx.compose.foundation.layout.Box
@@ -22,8 +22,8 @@
 //import com.google.maps.android.compose.CameraPositionState
 //import com.google.maps.android.compose.MapsComposeExperimentalApi
 //import com.google.maps.android.compose.clustering.Clustering
-//import com.richaa2.mappdp.domain.model.LocationInfo
-//import com.richaa2.mappdp.presentation.map.utils.CLUSTER_ANIMATION_ZOOM_DURATION_MS
+//import com.richaa2.map.kmp.domain.model.LocationInfo
+//import com.richaa2.map.kmp.presentation.map.utils.CLUSTER_ANIMATION_ZOOM_DURATION_MS
 //import com.richaa2.mappdp.presentation.model.LocationClusterItem
 //import kotlinx.coroutines.CoroutineScope
 //import kotlinx.coroutines.launch

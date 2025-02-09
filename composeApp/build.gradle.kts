@@ -1,3 +1,4 @@
+import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -9,16 +10,34 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.secrets)
     alias(libs.plugins.kotlinCocoapods)
+    alias(libs.plugins.sqlDelight)
 
 }
 
 kotlin {
+    sqldelight {
+        databases {
+            create("AppDatabase") {
+                packageName.set("com.richaa2.db")
+
+                schemaOutputDirectory = file("src/commonMain/sqldelight/databases")
+
+            }
+        }
+    }
     sourceSets.commonMain {
         kotlin.srcDir("build/generated/ksp/metadata")
     }
+//    androidTarget {
+//        compilerOptions {
+//            jvmTarget.set(JvmTarget.JVM_11)
+//        }
+//    }
     androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "11"
+            }
         }
     }
 
@@ -68,11 +87,14 @@ kotlin {
 
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
+            implementation(libs.sqldelight.android)
+
         }
         commonMain.dependencies {
             implementation(libs.androidx.room.runtime)
             implementation(libs.sqlite.bundled)
             implementation(libs.sqlite)
+            implementation(libs.sqldelight.coroutines)
 
 
             implementation(compose.runtime)
@@ -88,6 +110,10 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.lifecycle.viewmodel)
             implementation(libs.navigation.compose)
+
+        }
+        iosMain.dependencies {
+            implementation(libs.sqldelight.native)
 
         }
     }
@@ -135,21 +161,21 @@ dependencies {
 //    implementation(libs.androidx.material3.android)
 //    implementation(libs.androidx.room.ktx)
 //    ksp(libs.androidx.room.compiler)
-    add("kspAndroid", libs.androidx.room.compiler)
-    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
-    add("kspIosArm64", libs.androidx.room.compiler)
-    add("kspCommonMainMetadata", libs.androidx.room.compiler)
+//    add("kspAndroid", libs.androidx.room.compiler)
+//    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+//    add("kspIosArm64", libs.androidx.room.compiler)
+//    add("kspCommonMainMetadata", libs.androidx.room.compiler)
 
 
 }
-ksp {
-    arg("room.schemaLocation", "${projectDir}/schemas")
-}
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
-    if (name != "kspCommonMainKotlinMetadata" ) {
-        dependsOn("kspCommonMainKotlinMetadata")
-    }
-}
+//ksp {
+//    arg("room.schemaLocation", "${projectDir}/schemas")
+//}
+//tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
+//    if (name != "kspCommonMainKotlinMetadata") {
+//        dependsOn("kspCommonMainKotlinMetadata")
+//    }
+//}
 secrets {
     propertiesFileName = "secrets.properties"
     defaultPropertiesFileName = "secrets.defaults.properties"

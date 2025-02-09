@@ -1,11 +1,11 @@
-package com.richaa2.mappdp.presentation.locationDetails
+package com.richaa2.map.kmp.presentation.locationDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.richaa2.mappdp.domain.common.Resource
-import com.richaa2.mappdp.domain.model.LocationInfo
-import com.richaa2.mappdp.domain.usecase.DeleteLocationInfoUseCase
-import com.richaa2.mappdp.domain.usecase.GetLocationInfoUseCase
+import com.richaa2.map.kmp.domain.common.Resource
+import com.richaa2.map.kmp.domain.model.LocationInfo
+import com.richaa2.map.kmp.domain.usecase.DeleteLocationInfoUseCase
+import com.richaa2.map.kmp.domain.usecase.GetLocationInfoUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -31,7 +31,7 @@ class LocationDetailsViewModel  constructor(
     fun loadLocationDetails(locationId: Long) {
         viewModelScope.launch {
             try {
-                getLocationInfoUseCase(locationId).collect { result ->
+                getLocationInfoUseCase(locationId).let { result ->
                     when (result) {
                         is Resource.Error -> _errorState.value = result.message
                         is Resource.Loading -> _uiState.value = LocationDetailsState.Loading

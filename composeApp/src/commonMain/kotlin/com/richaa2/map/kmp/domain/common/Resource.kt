@@ -1,4 +1,4 @@
-package com.richaa2.mappdp.domain.common
+package com.richaa2.map.kmp.domain.common
 
 sealed class Resource<out T> {
     data class Success<T>(val data: T) : Resource<T>()

@@ -1,4 +1,4 @@
-//package com.richaa2.mappdp.presentation.addLocation.components
+package com.richaa2.map.kmp.presentation.addLocation.components//package com.richaa2.mappdp.presentation.addLocation.components
 //
 //import android.graphics.Bitmap
 //import androidx.activity.compose.rememberLauncherForActivityResult

@@ -1,4 +1,4 @@
-package com.richaa2.mappdp.presentation.addLocation
+package com.richaa2.map.kmp.presentation.addLocation
 
 data class AddLocationFormState(
         val title: String = "",
