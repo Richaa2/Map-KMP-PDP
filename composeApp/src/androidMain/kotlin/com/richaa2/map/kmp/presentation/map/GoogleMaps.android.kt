@@ -15,15 +15,10 @@ actual fun GoogleMaps(
     GoogleMap(
         modifier = modifier,
         onMapClick = { latlng ->
-            onMapClick(
-                LatLong(
-                    latlng.latitude,
-                    latlng.longitude
-                )
-            )
+
         },
         onMapLongClick = { latlng ->
-            onMapClick(
+            onMapLongClick(
                 LatLong(
                     latlng.latitude,
                     latlng.longitude

@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.secrets)
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.kotlin.serialization)
 
 }
 
@@ -91,6 +92,9 @@ kotlin {
 
         }
         commonMain.dependencies {
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.navigation.compose)
+
             implementation(libs.androidx.room.runtime)
             implementation(libs.sqlite.bundled)
             implementation(libs.sqlite)
@@ -157,7 +161,7 @@ android {
 //    schemaDirectory("$projectDir/schemas")
 //}
 dependencies {
-//    implementation(libs.play.services.maps)
+    //    implementation(libs.play.services.maps)
 //    implementation(libs.androidx.material3.android)
 //    implementation(libs.androidx.room.ktx)
 //    ksp(libs.androidx.room.compiler)

@@ -20,12 +20,13 @@ import androidx.compose.ui.Modifier
 import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.presentation.map.components.MapFloatingActionButton
 import com.richaa2.map.kmp.domain.model.LocationInfo
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MapScreen(
-//    viewModel: MapViewModel = koinViewModel<MapViewModel>(),
+    viewModel: MapViewModel = koinViewModel<MapViewModel>(),
     onAddLocation: (LatLong) -> Unit,
     onLocationDetails: (LocationInfo) -> Unit,
 ) {
@@ -55,6 +56,11 @@ fun MapScreen(
 //                cameraPositionState = cameraPositionState,
 //                currentLocation = currentLocation,
                 onDisabledClick = {
+                    onAddLocation(
+                        LatLong(
+                            latitude = 2.32, longitude = 2.32
+                        )
+                    )
 //                    if (errorMessage == null) {
 //                        viewModel.onLocationDisabledMessage()
 //                    }
@@ -72,35 +78,11 @@ fun MapScreen(
             onMapLongClick = { latLong ->
                 println("onMapLongClick LatLong: $latLong")
 
-//                onAddLocation(latLong)
+                onAddLocation(latLong)
             }
         )
 
     }
 
 
-}
-
-@Composable
-fun CleanMapScreen(modifier: Modifier = Modifier) {
-    androidx.compose.material3.MaterialTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .systemBarsPadding()
-        ) {
-            GoogleMaps(
-                modifier = Modifier,
-                onMapClick = { latLong ->
-                    println("onMapClick LatLong: $latLong")
-//                onAddLocation(latLong)
-                },
-                onMapLongClick = { latLong ->
-                    println("onMapLongClick LatLong: $latLong")
-
-//                onAddLocation(latLong)
-                }
-            )
-        }
-    }
 }
