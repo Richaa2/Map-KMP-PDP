@@ -11,21 +11,21 @@ import kotlinx.coroutines.flow.Flow
 
 class LocationDataSource(db: AppDatabase) {
     private val queries = db.locationInfoQueries
-     fun isExistLocationById(id: Long): Boolean {
-        return queries.isExist(id).executeAsOneOrNull() != null
+    fun isExistLocationById(id: Long): Boolean {
+        return queries.isExist(id).executeAsOneOrNull() == true
     }
 
-     fun insertLocation(location: LocationInfo) {
-        queries.insertLocation(
-            latitude = location.latitude,
-            longitude = location.longitude,
-            title = location.title,
-            description = location.description,
-            imageUrl = location.imageUrl
-        )
+    fun insertLocation(location: LocationInfo) {
+            queries.insertLocation(
+                latitude = location.latitude,
+                longitude = location.longitude,
+                title = location.title,
+                description = location.description,
+                imageUrl = location.imageUrl
+            )
     }
 
-     fun updateLocation(location: LocationInfo) {
+    fun updateLocation(location: LocationInfo) {
         location.id?.let {
             queries.updateLocation(
                 id = it,
@@ -38,11 +38,11 @@ class LocationDataSource(db: AppDatabase) {
         }
     }
 
-     fun deleteLocationById(id: Long) {
+    fun deleteLocationById(id: Long) {
         queries.deleteLocationById(id)
     }
 
-     fun getLocationById(id: Long): Locations_info? {
+    fun getLocationById(id: Long): Locations_info? {
         return queries.getLocationById(id).executeAsOneOrNull()
     }
 

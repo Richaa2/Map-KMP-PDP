@@ -1,6 +1,5 @@
 package com.richaa2.map.kmp.di
 
-import com.richaa2.map.kmp.TestViewModel
 import com.richaa2.map.kmp.presentation.addLocation.AddLocationViewModel
 import com.richaa2.map.kmp.presentation.map.MapViewModel
 import com.richaa2.map.kmp.presentation.locationDetails.LocationDetailsViewModel
@@ -13,5 +12,4 @@ val viewModelModule = module {
     viewModelOf(::AddLocationViewModel)
     viewModelOf(::LocationDetailsViewModel)
     viewModelOf(::MapViewModel)
-    viewModelOf(::TestViewModel)
 }

@@ -1,5 +1,6 @@
 package com.richaa2.map.kmp.presentation.addLocation
 
+import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.richaa2.map.kmp.domain.common.Resource
@@ -52,11 +53,12 @@ class AddLocationViewModel  constructor(
                         is Resource.Success -> {
                             val data = result.data
                             editLocation = data
-//                            _formState.value = AddLocationFormState(
-//                                title = data?.title ?: "",
-//                                description = data?.description ?: "",
+                            _formState.value = AddLocationFormState(
+                                title = data?.title ?: "",
+                                description = data?.description ?: "",
+                                image = null
 //                                image = data?.imageUrl?.base64ToByteArray()
-//                            )
+                            )
                             _uiState.value = AddLocationState.Success
                         }
                     }
@@ -91,46 +93,49 @@ class AddLocationViewModel  constructor(
         val description = _formState.value.description.trim()
 
         if (title.isEmpty()) {
+            _formState.value = _formState.value.copy(titleError = "title cannot be empty")
 //            _formState.value = _formState.value.copy(titleError = resourceProvider.getString(R.string.title_cannot_be_empty))
             return
         } else {
-//            _formState.value = _formState.value.copy(titleError = null)
+            _formState.value = _formState.value.copy(titleError = null)
         }
         _uiState.value = AddLocationState.Loading
 
         viewModelScope.launch {
             val result =  editLocation?.let {
-//                updateLocationInfoUseCase(
-//                    it.copy(
-//                        title = title,
-//                        description = description,
+                updateLocationInfoUseCase(
+                    it.copy(
+                        title = title,
+                        description = description,
+                        imageUrl = null
 //                        imageUrl = _formState.value.image?.byteArrayToBase64()
-//                    )
-//                )
+                    )
+                )
             } ?: run {
-//                saveLocationInfoUseCase(
-//                    LocationInfo(
-//                        title = title,
-//                        description = description,
-//                        latitude = latitude,
-//                        longitude = longitude,
+                saveLocationInfoUseCase(
+                    LocationInfo(
+                        title = title,
+                        description = description,
+                        latitude = latitude,
+                        longitude = longitude,
+                        imageUrl = null,
 //                        imageUrl = _formState.value.image?.byteArrayToBase64(),
-//                    )
-//                )
+                    )
+                )
             }
 
-//            when (result) {
-//                is Resource.Success -> {
-//                    onNavigateBack()
-//                }
-//
-//                is Resource.Error -> {
-//                    _errorState.value = result.message
-//                    _uiState.value = AddLocationState.Success
-//                }
-//
-//                Resource.Loading -> Unit
-//            }
+            when (result) {
+                is Resource.Success -> {
+                    onNavigateBack()
+                }
+
+                is Resource.Error -> {
+                    _errorState.value = result.message
+                    _uiState.value = AddLocationState.Success
+                }
+
+                Resource.Loading -> Unit
+            }
         }
     }
 

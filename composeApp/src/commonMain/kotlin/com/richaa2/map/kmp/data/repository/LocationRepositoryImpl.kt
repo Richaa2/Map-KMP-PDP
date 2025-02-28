@@ -1,5 +1,6 @@
 package com.richaa2.map.kmp.data.repository
 
+import androidx.compose.ui.input.key.Key.Companion.P
 import com.richaa2.map.kmp.data.source.local.LocationDataSource
 import com.richaa2.map.kmp.core.common.ErrorHandler
 import com.richaa2.map.kmp.data.mapper.LocationMapper.fromEntityToDomain
@@ -47,7 +48,8 @@ class LocationRepositoryImpl(
 
     override suspend fun upsertLocation(locationInfo: LocationInfo): Resource<Unit> {
         return try {
-            if (locationInfo.id?.let { locationDataSource.isExistLocationById(it) } == true) {
+            println("${locationInfo.id.let { locationDataSource.isExistLocationById(it) }}")
+            if (locationInfo.id.let { locationDataSource.isExistLocationById(it) }) {
                 locationDataSource.updateLocation(locationInfo)
             } else {
                 locationDataSource.insertLocation(locationInfo)

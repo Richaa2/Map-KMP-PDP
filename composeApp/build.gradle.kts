@@ -118,7 +118,6 @@ kotlin {
         }
         iosMain.dependencies {
             implementation(libs.sqldelight.native)
-
         }
     }
 }

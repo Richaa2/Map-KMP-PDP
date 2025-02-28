@@ -12,6 +12,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,8 +31,8 @@ fun MapScreen(
     onAddLocation: (LatLong) -> Unit,
     onLocationDetails: (LocationInfo) -> Unit,
 ) {
-//    val uiState by viewModel.uiState.collectAsState()
-//    val errorMessage by viewModel.errorState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
+    val errorMessage by viewModel.errorState.collectAsState()
 
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -61,9 +62,9 @@ fun MapScreen(
                             latitude = 2.32, longitude = 2.32
                         )
                     )
-//                    if (errorMessage == null) {
-//                        viewModel.onLocationDisabledMessage()
-//                    }
+                    if (errorMessage == null) {
+                        viewModel.onLocationDisabledMessage()
+                    }
                 }
             )
         },
@@ -71,9 +72,9 @@ fun MapScreen(
 
         GoogleMaps(
             modifier = Modifier,
-            onMapClick = { latLong ->
-                println("onMapClick LatLong: $latLong")
-//                onAddLocation(latLong)
+            savedLocations = (uiState as? MapViewModel.MapUiState.Success)?.locations ?: emptyList(),
+            onMarkerClick = {
+                onLocationDetails(it)
             },
             onMapLongClick = { latLong ->
                 println("onMapLongClick LatLong: $latLong")

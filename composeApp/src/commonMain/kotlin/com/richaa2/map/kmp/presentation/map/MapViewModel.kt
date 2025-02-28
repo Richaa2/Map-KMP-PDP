@@ -2,6 +2,8 @@ package com.richaa2.map.kmp.presentation.map
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.richaa2.map.kmp.core.common.ResourceProvider
+import com.richaa2.map.kmp.domain.common.Resource
 import com.richaa2.map.kmp.domain.model.LocationInfo
 import com.richaa2.map.kmp.domain.usecase.GetSavedLocationsInfoUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -61,22 +63,23 @@ class MapViewModel  constructor(
 
     private fun loadSavedLocations() {
         viewModelScope.launch {
-//            getSavedLocationsInfoUseCase().collect { result ->
-//                when (result) {
-//                    is Resource.Success -> {
-//                        val locations = result.data
-//                        _uiState.value = MapUiState.Success(locations)
-//                    }
-//
-//                    is Resource.Error -> {
-//                        _errorState.value = result.message
-//                    }
-//
-//                    is Resource.Loading -> {
-//                        _uiState.value = MapUiState.Loading
-//                    }
-//                }
-//            }
+            getSavedLocationsInfoUseCase().collect { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        val locations = result.data
+                        _uiState.value = MapUiState.Success(locations)
+                    }
+
+                    is Resource.Error -> {
+                        _errorState.value = result.message
+                    }
+
+                    Resource.Loading -> {
+                        _uiState.value = MapUiState.Loading
+                    }
+
+                }
+            }
         }
     }
 
