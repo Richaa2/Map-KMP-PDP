@@ -92,6 +92,9 @@ kotlin {
 
         }
         commonMain.dependencies {
+            implementation(libs.geo)
+            implementation(libs.geo.compose)
+
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.navigation.compose)
 

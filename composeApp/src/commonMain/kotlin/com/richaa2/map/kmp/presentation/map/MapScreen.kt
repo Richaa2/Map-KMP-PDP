@@ -1,8 +1,6 @@
 package com.richaa2.map.kmp.presentation.map
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHost
@@ -12,19 +10,27 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.richaa2.map.kmp.domain.model.LatLong
-import com.richaa2.map.kmp.presentation.map.components.MapFloatingActionButton
 import com.richaa2.map.kmp.domain.model.LocationInfo
+import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
+import com.richaa2.map.kmp.presentation.map.camera.CameraPositionStateSaver
+import com.richaa2.map.kmp.presentation.map.components.MapFloatingActionButton
+import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_MAP_LATITUDE
+import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_MAP_LONGITUDE
+import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_ZOOM_LEVEL
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
 fun MapScreen(
     viewModel: MapViewModel = koinViewModel<MapViewModel>(),
@@ -37,6 +43,20 @@ fun MapScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     var showPermissionDialog by remember { mutableStateOf(false) }
+
+    val currentLocation by viewModel.currentLocation.collectAsState()
+    LaunchedEffect(currentLocation) {
+        println(
+            "currentLocation $currentLocation"
+        )
+    }
+    val cameraPositionState = rememberSaveable(saver = CameraPositionStateSaver) {
+        CameraPositionState(
+            initialLatitude = DEFAULT_MAP_LATITUDE,
+            initialLongitude = DEFAULT_MAP_LONGITUDE,
+            initialZoom = DEFAULT_ZOOM_LEVEL
+        )
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -54,14 +74,10 @@ fun MapScreen(
         floatingActionButton = {
 
             MapFloatingActionButton(
-//                cameraPositionState = cameraPositionState,
-//                currentLocation = currentLocation,
+                cameraPositionState = cameraPositionState,
+                currentLocation = currentLocation,
                 onDisabledClick = {
-                    onAddLocation(
-                        LatLong(
-                            latitude = 2.32, longitude = 2.32
-                        )
-                    )
+
                     if (errorMessage == null) {
                         viewModel.onLocationDisabledMessage()
                     }
@@ -80,7 +96,8 @@ fun MapScreen(
                 println("onMapLongClick LatLong: $latLong")
 
                 onAddLocation(latLong)
-            }
+            },
+            cameraPositionState = cameraPositionState
         )
 
     }

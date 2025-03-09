@@ -1,26 +1,31 @@
 package com.richaa2.map.kmp.data.repository
 
-import androidx.compose.ui.input.key.Key.Companion.P
-import com.richaa2.map.kmp.data.source.local.LocationDataSource
 import com.richaa2.map.kmp.core.common.ErrorHandler
 import com.richaa2.map.kmp.data.mapper.LocationMapper.fromEntityToDomain
+import com.richaa2.map.kmp.data.source.local.LocationDataSource
 import com.richaa2.map.kmp.domain.common.Resource
+import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.domain.model.LocationInfo
 import com.richaa2.map.kmp.domain.repository.LocationRepository
+import dev.icerock.moko.geo.LocationTracker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 
 class LocationRepositoryImpl(
     private val locationDataSource: LocationDataSource,
     private val errorHandler: ErrorHandler,
-) : LocationRepository {
+    private val locationTracker: LocationTracker,
+
+    ) : LocationRepository {
 
     override suspend fun getLocationInfoById(id: Long): Resource<LocationInfo?> {
         return withContext(Dispatchers.IO) {
@@ -68,4 +73,22 @@ class LocationRepositoryImpl(
             Resource.Error(errorHandler.getErrorMessage(e), e)
         }
     }
+
+    override fun getCurrentLocation(): Flow<LatLong> {
+        return locationTracker.getLocationsFlow()
+            .distinctUntilChanged()
+            .map { location ->
+            LatLong(location.latitude, location.longitude)
+        }
+    }
+
+    override suspend fun startLocationUpdates() {
+        locationTracker.startTracking()
+    }
+
+    override fun stopLocationUpdates() {
+        locationTracker.stopTracking()
+    }
+
+
 }

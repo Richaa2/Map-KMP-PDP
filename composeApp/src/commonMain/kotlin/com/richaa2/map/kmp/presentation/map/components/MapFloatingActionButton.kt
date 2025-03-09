@@ -8,18 +8,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.richaa2.map.kmp.domain.model.LatLong
+import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
+import com.richaa2.map.kmp.presentation.map.utils.ANIMATION_TO_CURRENT_LOCATION_DURATION_MS
+import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_ZOOM_LEVEL
 import kotlinx.coroutines.launch
 
 @Composable
 fun MapFloatingActionButton(
     modifier: Modifier = Modifier,
-//    cameraPositionState: CameraPositionState,
-//    currentLocation: Location?,
+    cameraPositionState: CameraPositionState,
+    currentLocation: LatLong?,
     onDisabledClick: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val isLocationAvailable = false
-//    val isLocationAvailable = currentLocation != null
+    val isLocationAvailable = currentLocation != null
     val buttonColor = if (isLocationAvailable) {
         MaterialTheme.colorScheme.primary
     } else {
@@ -30,13 +33,12 @@ fun MapFloatingActionButton(
         onClick = {
             coroutineScope.launch {
                 if (isLocationAvailable) {
-//                    cameraPositionState.animate(
-//                        update = CameraUpdateFactory.newLatLngZoom(
-//                            LatLng(currentLocation!!.latitude, currentLocation.longitude),
-//                            15f
-//                        ),
-//                        durationMs = 1000
-//                    )
+                    cameraPositionState.animateTo(
+                        newLatitude = currentLocation!!.latitude,
+                        newLongitude = currentLocation.longitude,
+                        newZoom = DEFAULT_ZOOM_LEVEL,
+                        durationMillis = ANIMATION_TO_CURRENT_LOCATION_DURATION_MS
+                    )
                 } else {
                     onDisabledClick()
                 }

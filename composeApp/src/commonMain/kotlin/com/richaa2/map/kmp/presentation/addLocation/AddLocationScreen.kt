@@ -37,8 +37,9 @@ import com.richaa2.map.kmp.presentation.addLocation.utils.MAX_TITLE_LENGTH
 import com.richaa2.mappdp.designsystem.components.LoadingContent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
 fun AddLocationScreen(
     modifier: Modifier = Modifier,

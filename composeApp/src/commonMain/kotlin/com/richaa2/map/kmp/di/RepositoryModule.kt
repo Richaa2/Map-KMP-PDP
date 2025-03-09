@@ -12,6 +12,5 @@ import org.koin.dsl.module
 val repositoryModule = module {
     singleOf(::LocationRepositoryImpl).bind<LocationRepository>()
     singleOf(::DefaultErrorHandler).bind<ErrorHandler>()
-
     singleOf(::LocationDataSource)
 }

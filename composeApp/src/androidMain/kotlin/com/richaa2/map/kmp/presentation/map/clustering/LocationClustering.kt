@@ -16,14 +16,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.clustering.Cluster
-import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.MapsComposeExperimentalApi
 import com.google.maps.android.compose.clustering.Clustering
 import com.richaa2.map.kmp.domain.model.LocationInfo
-import com.richaa2.map.kmp.presentation.map.utils.CLUSTER_ANIMATION_ZOOM_DURATION_MS
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -32,7 +29,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun LocationClustering(
     clusterItems: List<LocationClusterItem>,
-    cameraPositionState: CameraPositionState,
+    cameraPositionState: com.richaa2.map.kmp.presentation.map.camera.CameraPositionState,
     onMarkerClick: (LocationInfo) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -57,7 +54,7 @@ fun LocationClustering(
 
 private fun handleClusterClick(
     cluster: Cluster<LocationClusterItem>,
-    cameraPositionState: CameraPositionState,
+    cameraPositionState: com.richaa2.map.kmp.presentation.map.camera.CameraPositionState,
     coroutineScope: CoroutineScope,
 ): Boolean {
     val boundsPadding = 100
@@ -66,10 +63,7 @@ private fun handleClusterClick(
     }.build()
 
     coroutineScope.launch {
-        cameraPositionState.animate(
-            update = CameraUpdateFactory.newLatLngBounds(latLngBounds, boundsPadding),
-            durationMs = CLUSTER_ANIMATION_ZOOM_DURATION_MS
-        )
+        cameraPositionState.animateWithBounds(latLngBounds, boundsPadding)
     }
     return true
 }
