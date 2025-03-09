@@ -1,4 +1,4 @@
-//package com.richaa2.mappdp.presentation.map.components
+package com.richaa2.map.kmp.presentation.map.components//package com.richaa2.mappdp.presentation.map.components
 //
 //import androidx.compose.material3.AlertDialog
 //import androidx.compose.material3.Text

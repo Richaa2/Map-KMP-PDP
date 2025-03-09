@@ -1,30 +1,20 @@
-package com.richaa2.mappdp.data.mapper
+package com.richaa2.map.kmp.data.mapper
 
-import com.richaa2.mappdp.data.source.local.LocationInfoEntity
-import com.richaa2.mappdp.domain.model.LocationInfo
+import com.richaa2.db.Locations_info
+import com.richaa2.map.kmp.domain.model.LocationInfo
 
 
-class LocationMapper  constructor(){
+object LocationMapper {
 
-    fun fromEntityToDomain(entity: LocationInfoEntity): LocationInfo {
+    fun Locations_info.fromEntityToDomain(): LocationInfo {
         return LocationInfo(
-            id = entity.id,
-            latitude = entity.latitude,
-            longitude = entity.longitude,
-            title = entity.title,
-            description = entity.description,
-            imageUrl = entity.imageUrl,
+            id = this.id,
+            latitude = this.latitude,
+            longitude = this.longitude,
+            title = this.title,
+            description = this.description,
+            imageUrl = this.imageUrl,
         )
     }
 
-    fun fromDomainToEntity(domain: LocationInfo): LocationInfoEntity {
-        return LocationInfoEntity(
-            id = domain.id,
-            latitude = domain.latitude,
-            longitude = domain.longitude,
-            title = domain.title,
-            description = domain.description,
-            imageUrl = domain.imageUrl,
-        )
-    }
 }

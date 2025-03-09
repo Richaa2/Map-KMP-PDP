@@ -1,8 +1,8 @@
-package com.richaa2.mappdp.domain.usecase
+package com.richaa2.map.kmp.domain.usecase
 
-import com.richaa2.mappdp.domain.common.Resource
-import com.richaa2.mappdp.domain.model.LocationInfo
-import com.richaa2.mappdp.domain.repository.LocationRepository
+import com.richaa2.map.kmp.domain.common.Resource
+import com.richaa2.map.kmp.domain.model.LocationInfo
+import com.richaa2.map.kmp.domain.repository.LocationRepository
 
 
 class SaveLocationInfoUseCase  constructor(

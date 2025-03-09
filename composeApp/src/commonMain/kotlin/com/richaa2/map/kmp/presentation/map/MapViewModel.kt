@@ -1,25 +1,35 @@
-package com.richaa2.map.kmp.dependecies
+package com.richaa2.map.kmp.presentation.map
 
-import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.richaa2.mappdp.core.common.ResourceProvider
-import com.richaa2.mappdp.domain.common.Resource
-import com.richaa2.mappdp.domain.model.LocationInfo
-import com.richaa2.mappdp.domain.usecase.GetSavedLocationsInfoUseCase
+import com.richaa2.map.kmp.domain.common.Resource
+import com.richaa2.map.kmp.domain.model.LatLong
+import com.richaa2.map.kmp.domain.model.LocationInfo
+import com.richaa2.map.kmp.domain.usecase.GetCurrentLocationUseCase
+import com.richaa2.map.kmp.domain.usecase.GetSavedLocationsInfoUseCase
+import com.richaa2.map.kmp.domain.usecase.StartLocationUpdatesUseCase
+import com.richaa2.map.kmp.domain.usecase.StopLocationUpdatesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class MapViewModel  constructor(
+class MapViewModel constructor(
     private val getSavedLocationsInfoUseCase: GetSavedLocationsInfoUseCase,
-//    private val fusedLocationProviderClient: FusedLocationProviderClient,
+    private val stopLocationUpdatesUseCase: StopLocationUpdatesUseCase,
+    private val startLocationUpdatesUseCase: StartLocationUpdatesUseCase,
+    getCurrentLocationUseCase: GetCurrentLocationUseCase,
 //    private val resourceProvider: ResourceProvider,
 ) : ViewModel() {
 
-//    private val _currentLocation = MutableStateFlow<Location?>(null)
-//    val currentLocation: StateFlow<Location?> = _currentLocation
+    val currentLocation: StateFlow<LatLong?> = getCurrentLocationUseCase()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null
+        )
 
     private val _uiState = MutableStateFlow<MapUiState>(MapUiState.Loading)
     val uiState: StateFlow<MapUiState> = _uiState.asStateFlow()
@@ -30,35 +40,20 @@ class MapViewModel  constructor(
 
     init {
         loadSavedLocations()
+        getSavedLocationsInfoUseCase()
+        viewModelScope.launch {
+            startLocationUpdatesUseCase()
+        }
     }
 
-    //    @SuppressLint("MissingPermission")
-    fun startLocationUpdates() {
-//        val locationRequest = com.google.android.gms.location.LocationRequest.Builder(
-//            com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY,
-//            UPDATE_LOCATION_INTERVAL_MS
-//        ).apply {
-//            setMinUpdateIntervalMillis(MIN_UPDATE_LOCATION_INTERVAL_MS)
-//        }.build()
-//
-//        fusedLocationProviderClient.requestLocationUpdates(
-//            locationRequest,
-//            object : com.google.android.gms.location.LocationCallback() {
-//                override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
-//                    val location = locationResult.lastLocation
-//                    _currentLocation.value = location
-//                }
-//
-//                override fun onLocationAvailability(p0: LocationAvailability) {
-//                    super.onLocationAvailability(p0)
-//                    if (!p0.isLocationAvailable) {
-//                        _currentLocation.value = null
-//                        onLocationDisabledMessage()
-//                    }
-//                }
-//            },
-//            null
-//        )
+    override fun onCleared() {
+        super.onCleared()
+        stopLocationUpdates()
+    }
+
+
+    private fun stopLocationUpdates() {
+        stopLocationUpdatesUseCase()
     }
 
     private fun loadSavedLocations() {
@@ -74,9 +69,10 @@ class MapViewModel  constructor(
                         _errorState.value = result.message
                     }
 
-                    is Resource.Loading -> {
+                    Resource.Loading -> {
                         _uiState.value = MapUiState.Loading
                     }
+
                 }
             }
         }
@@ -97,4 +93,6 @@ class MapViewModel  constructor(
         object Loading : MapUiState()
         data class Success(val locations: List<LocationInfo>) : MapUiState()
     }
+
+
 }

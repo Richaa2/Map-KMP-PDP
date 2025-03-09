@@ -1,4 +1,4 @@
-package com.richaa2.mappdp.domain.model
+package com.richaa2.map.kmp.domain.model
 
 data class LocationInfo(
     val id: Long = 0,

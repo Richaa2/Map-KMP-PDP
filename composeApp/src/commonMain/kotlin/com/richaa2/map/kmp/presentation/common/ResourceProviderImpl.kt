@@ -1,6 +1,6 @@
-//package com.richaa2.mappdp.presentation.common
+package com.richaa2.map.kmp.presentation.common//package com.richaa2.mappdp.presentation.common
 //
-//import com.richaa2.mappdp.core.common.ResourceProvider
+//import com.richaa2.map.kmp.core.common.ResourceProvider
 //import kotlin.text.Typography.dagger
 //
 //class ResourceProviderImpl  constructor(

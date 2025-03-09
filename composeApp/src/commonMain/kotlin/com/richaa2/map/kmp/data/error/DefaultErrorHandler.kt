@@ -1,7 +1,6 @@
-package com.richaa2.mappdp.data.error
+package com.richaa2.map.kmp.data.error
 
-import com.richaa2.mappdp.core.common.ErrorHandler
-import com.richaa2.mappdp.core.common.ResourceProvider
+import com.richaa2.map.kmp.core.common.ErrorHandler
 
 
 class DefaultErrorHandler  constructor(

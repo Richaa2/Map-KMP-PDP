@@ -1,69 +1,63 @@
-//package com.richaa2.mappdp.presentation.map.components
-//
-//import android.location.Location
-//import androidx.compose.foundation.layout.padding
-//import androidx.compose.material.icons.Icons
-//import androidx.compose.material.icons.filled.MyLocation
-//import androidx.compose.material3.FloatingActionButton
-//import androidx.compose.material3.Icon
-//import androidx.compose.material3.MaterialTheme
-//import androidx.compose.runtime.Composable
-//import androidx.compose.runtime.rememberCoroutineScope
-//import androidx.compose.ui.Modifier
-//import androidx.compose.ui.res.stringResource
-//import androidx.compose.ui.tooling.preview.Preview
-//import androidx.compose.ui.unit.dp
-//import com.google.android.gms.maps.CameraUpdateFactory
-//import com.google.android.gms.maps.model.LatLng
-//import com.google.maps.android.compose.CameraPositionState
-//import com.google.maps.android.compose.rememberCameraPositionState
-//import com.richaa2.mappdp.R
-//import kotlinx.coroutines.launch
-//
-//@Composable
-//fun MapFloatingActionButton(
-//    modifier: Modifier = Modifier,
-//    cameraPositionState: CameraPositionState,
-//    currentLocation: Location?,
-//    onDisabledClick: () -> Unit,
-//) {
-//    val coroutineScope = rememberCoroutineScope()
-//    val isLocationAvailable = currentLocation != null
-//    val buttonColor = if (isLocationAvailable) {
-//        MaterialTheme.colorScheme.primary
-//    } else {
-//        MaterialTheme.colorScheme.outline
-//    }
-//
-//    FloatingActionButton(
-//        onClick = {
-//            coroutineScope.launch {
-//                if (isLocationAvailable) {
-//                    cameraPositionState.animate(
-//                        update = CameraUpdateFactory.newLatLngZoom(
-//                            LatLng(currentLocation!!.latitude, currentLocation.longitude),
-//                            15f
-//                        ),
-//                        durationMs = 1000
-//                    )
-//                } else {
-//                    onDisabledClick()
-//                }
-//            }
-//        },
-//        modifier = modifier,
-//        containerColor = buttonColor,
-//        contentColor = MaterialTheme.colorScheme.onPrimary
-//    ) {
-//        Icon(
-//            imageVector = Icons.Filled.MyLocation,
+package com.richaa2.map.kmp.presentation.map.components
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import com.richaa2.map.kmp.domain.model.LatLong
+import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
+import com.richaa2.map.kmp.presentation.map.utils.ANIMATION_TO_CURRENT_LOCATION_DURATION_MS
+import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_ZOOM_LEVEL
+import kotlinx.coroutines.launch
+
+@Composable
+fun MapFloatingActionButton(
+    modifier: Modifier = Modifier,
+    cameraPositionState: CameraPositionState,
+    currentLocation: LatLong?,
+    onDisabledClick: () -> Unit,
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val isLocationAvailable = currentLocation != null
+    val buttonColor = if (isLocationAvailable) {
+        MaterialTheme.colorScheme.primary
+    } else {
+        MaterialTheme.colorScheme.outline
+    }
+
+    FloatingActionButton(
+        onClick = {
+            coroutineScope.launch {
+                if (isLocationAvailable) {
+                    cameraPositionState.animateTo(
+                        newLatitude = currentLocation!!.latitude,
+                        newLongitude = currentLocation.longitude,
+                        newZoom = DEFAULT_ZOOM_LEVEL,
+                        durationMillis = ANIMATION_TO_CURRENT_LOCATION_DURATION_MS
+                    )
+                } else {
+                    onDisabledClick()
+                }
+            }
+        },
+        modifier = modifier,
+        containerColor = buttonColor,
+        contentColor = MaterialTheme.colorScheme.onPrimary
+    ) {
+        Icon(
+            imageVector = Icons.Filled.LocationOn,
+            contentDescription = "Current Location"
 //            contentDescription = stringResource(R.string.current_location)
-//        )
-//    }
-//}
+        )
+    }
+}
+
 //
-//
-//@Preview(showBackground = true)
+//@Preview()
 //@Composable
 //fun MapFloatingActionButtonPreview() {
 //    val testLocation = Location("").apply {
@@ -81,7 +75,7 @@
 //    )
 //}
 //
-//@Preview(showBackground = true)
+//@Preview()
 //@Composable
 //fun MapFloatingActionButtonDisabledPreview() {
 //
