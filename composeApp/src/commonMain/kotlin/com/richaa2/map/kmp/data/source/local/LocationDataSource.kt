@@ -4,6 +4,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.richaa2.db.AppDatabase
 import com.richaa2.db.Locations_info
+import com.richaa2.map.kmp.core.byteArrayToBase64
 import com.richaa2.map.kmp.domain.model.LocationInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -21,7 +22,7 @@ class LocationDataSource(db: AppDatabase) {
                 longitude = location.longitude,
                 title = location.title,
                 description = location.description,
-                imageUrl = location.imageUrl
+                imageUrl = location.imageUrl?.byteArrayToBase64()
             )
     }
 
@@ -33,7 +34,7 @@ class LocationDataSource(db: AppDatabase) {
                 longitude = location.longitude,
                 title = location.title,
                 description = location.description,
-                imageUrl = location.imageUrl
+                imageUrl = location.imageUrl?.byteArrayToBase64()
             )
         }
     }

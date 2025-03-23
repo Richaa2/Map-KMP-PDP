@@ -84,7 +84,7 @@ class MapViewModel constructor(
 
     fun onLocationDisabledMessage() {
         viewModelScope.launch {
-//            _errorState.value =
+            _errorState.value = "Location disabled"
 //                resourceProvider.getString(R.string.location_disabled_message)
         }
     }

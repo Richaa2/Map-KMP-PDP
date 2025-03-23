@@ -50,6 +50,7 @@ fun MapScreen(
             "currentLocation $currentLocation"
         )
     }
+
     val cameraPositionState = rememberSaveable(saver = CameraPositionStateSaver) {
         CameraPositionState(
             initialLatitude = DEFAULT_MAP_LATITUDE,

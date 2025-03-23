@@ -30,31 +30,23 @@ class LocationDetailsViewModel  constructor(
 
     fun loadLocationDetails(locationId: Long) {
         viewModelScope.launch {
-            //TODO TEST
-            val locationInfo = LocationInfo(
-                latitude = 23.323,
-                longitude = 23.23,
-                title = "title",
-                description = "descrt",
-                imageUrl = null
-            )
-            _uiState.value = LocationDetailsState.Success(locationInfo)
+
             try {
-//                getLocationInfoUseCase(locationId).let { result ->
-//                    when (result) {
-//                        is Resource.Error -> _errorState.value = result.message
-//                        is Resource.Loading -> _uiState.value = LocationDetailsState.Loading
-//                        is Resource.Success -> {
-//                            result.data?.let {
-//                                _uiState.value = LocationDetailsState.Success(result.data)
-//                            } ?: run {
-//                                _uiState.value = LocationDetailsState.NotFound
-//                            }
-//                        }
-//                    }
-//                }
+                getLocationInfoUseCase(locationId).let { result ->
+                    when (result) {
+                        is Resource.Error -> _errorState.value = result.message
+                        is Resource.Loading -> _uiState.value = LocationDetailsState.Loading
+                        is Resource.Success -> {
+                            result.data?.let {
+                                _uiState.value = LocationDetailsState.Success(result.data)
+                            } ?: run {
+                                _uiState.value = LocationDetailsState.NotFound
+                            }
+                        }
+                    }
+                }
             } catch (e: Exception) {
-//                _errorState.value = e.localizedMessage
+                _errorState.value = e.message
             }
         }
     }

@@ -1,8 +1,8 @@
 package com.richaa2.map.kmp.presentation.addLocation
 
-import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.richaa2.map.kmp.core.byteArrayToBase64
 import com.richaa2.map.kmp.domain.common.Resource
 import com.richaa2.map.kmp.domain.model.LocationInfo
 import com.richaa2.map.kmp.domain.usecase.GetLocationInfoUseCase
@@ -56,8 +56,7 @@ class AddLocationViewModel  constructor(
                             _formState.value = AddLocationFormState(
                                 title = data?.title ?: "",
                                 description = data?.description ?: "",
-                                image = null
-//                                image = data?.imageUrl?.base64ToByteArray()
+                                image = data?.imageUrl
                             )
                             _uiState.value = AddLocationState.Success
                         }
@@ -107,8 +106,8 @@ class AddLocationViewModel  constructor(
                     it.copy(
                         title = title,
                         description = description,
-                        imageUrl = null
-//                        imageUrl = _formState.value.image?.byteArrayToBase64()
+//                        imageUrl = null
+                        imageUrl = _formState.value.image
                     )
                 )
             } ?: run {
@@ -118,8 +117,7 @@ class AddLocationViewModel  constructor(
                         description = description,
                         latitude = latitude,
                         longitude = longitude,
-                        imageUrl = null,
-//                        imageUrl = _formState.value.image?.byteArrayToBase64(),
+                        imageUrl = _formState.value.image,
                     )
                 )
             }

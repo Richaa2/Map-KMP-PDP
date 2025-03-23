@@ -143,7 +143,7 @@ fun AddLocationContent(
     onRemoveSelectedImage: () -> Unit,
 ) {
     val bitmap = remember(formState.image) {
-//        formState.image?.byteArrayToBitmap()
+        formState.image
     }
 
     Column(
@@ -161,8 +161,7 @@ fun AddLocationContent(
         ) {
 
             ImagePicker(
-                selectedImageBitmap = null,
-//                selectedImageBitmap = bitmap,
+                selectedImageBitmap = bitmap,
                 onImageSelected = onImageSelected,
                 onImageRemoved = onRemoveSelectedImage
             )

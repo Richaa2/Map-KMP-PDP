@@ -50,6 +50,9 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+
+            export(projects.mapKMP)
+
         }
     }
     cocoapods {
@@ -89,9 +92,13 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
             implementation(libs.sqldelight.android)
+            implementation("com.google.accompanist:accompanist-permissions:0.28.0")
 
         }
         commonMain.dependencies {
+            implementation("org.jetbrains.skiko:skiko:0.7.58")
+//            api(projects.mapKMP)
+
             implementation(libs.geo)
             implementation(libs.geo.compose)
 

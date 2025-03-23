@@ -1,6 +1,7 @@
 package com.richaa2.map.kmp.data.mapper
 
 import com.richaa2.db.Locations_info
+import com.richaa2.map.kmp.core.base64ToByteArray
 import com.richaa2.map.kmp.domain.model.LocationInfo
 
 
@@ -13,7 +14,7 @@ object LocationMapper {
             longitude = this.longitude,
             title = this.title,
             description = this.description,
-            imageUrl = this.imageUrl,
+            imageUrl = this.imageUrl?.base64ToByteArray(),
         )
     }
 

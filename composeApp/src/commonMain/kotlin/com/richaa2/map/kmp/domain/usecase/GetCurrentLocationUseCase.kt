@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class GetCurrentLocationUseCase(
     private val repository: LocationRepository,
 ) {
-    operator fun invoke(): Flow<LatLong> {
+    operator fun invoke(): Flow<LatLong?> {
         return repository.getCurrentLocation()
     }
 }

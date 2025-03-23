@@ -1,5 +1,6 @@
 package com.richaa2.map.kmp.presentation.locationDetails//package com.richaa2.mappdp.presentation.locationDetails
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,13 +34,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.domain.model.LocationInfo
+import com.richaa2.map.kmp.presentation.addLocation.components.toImageBitmap
 import com.richaa2.map.kmp.presentation.locationDetails.components.ConfirmationDialog
 import com.richaa2.mappdp.designsystem.components.LoadingContent
 import com.richaa2.mappdp.designsystem.components.NotFoundContent
 import kotlinx.coroutines.flow.collectLatest
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
@@ -190,16 +195,17 @@ fun LocationDetailContent(
                 .height(400.dp),
             contentAlignment = Alignment.Center
         ) {
-            if (false) {
-//            if (location.imageUrl?.base64ToBitmap() != null) {
-//                Image(
-//                    painter = rememberAsyncImagePainter(location.imageUrl.base64ToBitmap()),
+
+            if (location.imageUrl != null) {
+                Image(
+                    bitmap = location.imageUrl.toImageBitmap(),
+                    contentDescription = "selected_image",
 //                    contentDescription = stringResource(R.string.selected_image),
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .clip(MaterialTheme.shapes.small)
-//                )
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(MaterialTheme.shapes.small)
+                )
             } else {
                 Box(
                     modifier = Modifier

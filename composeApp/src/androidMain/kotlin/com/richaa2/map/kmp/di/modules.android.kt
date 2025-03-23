@@ -12,7 +12,9 @@ import org.koin.dsl.module
 actual val platformModule: Module = module {
     singleOf(::DbClient)
     singleOf(::DriverFactory)
-    single { LocationTracker(
-        permissionsController = PermissionsController(applicationContext = androidApplication())
-    ) }
+    single {
+        LocationTracker(
+            permissionsController = PermissionsController(applicationContext = androidApplication())
+        )
+    }
 }
