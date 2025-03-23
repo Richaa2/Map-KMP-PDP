@@ -1,6 +1,6 @@
 package com.richaa2.map.kmp.di
 
-import com.richaa2.map.kmp.core.PermissionBridge
+import com.richaa2.map.kmp.core.LocationManager
 import com.richaa2.map.kmp.data.source.local.LocationDataSource
 import com.richaa2.map.kmp.core.common.ErrorHandler
 import com.richaa2.map.kmp.data.error.DefaultErrorHandler
@@ -14,5 +14,5 @@ val repositoryModule = module {
     singleOf(::LocationRepositoryImpl).bind<LocationRepository>()
     singleOf(::DefaultErrorHandler).bind<ErrorHandler>()
     singleOf(::LocationDataSource)
-    singleOf(::PermissionBridge)
+    singleOf(::LocationManager)
 }

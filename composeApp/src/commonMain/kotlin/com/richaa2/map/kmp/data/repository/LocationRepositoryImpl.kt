@@ -1,7 +1,5 @@
 package com.richaa2.map.kmp.data.repository
 
-import com.richaa2.map.kmp.core.PermissionBridge
-import com.richaa2.map.kmp.core.PermissionResultCallback
 import com.richaa2.map.kmp.core.common.ErrorHandler
 import com.richaa2.map.kmp.data.mapper.LocationMapper.fromEntityToDomain
 import com.richaa2.map.kmp.data.source.local.LocationDataSource
@@ -30,8 +28,6 @@ class LocationRepositoryImpl(
     private val errorHandler: ErrorHandler,
     private val locationTracker: LocationTracker,
 
-    private val permissionBridge: PermissionBridge,
-
     ) : LocationRepository {
 
     override suspend fun getLocationInfoById(id: Long): Resource<LocationInfo?> {
@@ -54,7 +50,7 @@ class LocationRepositoryImpl(
                     emit(Resource.Success(locations))
                 }
             }.catch { e ->
-                emit(Resource.Error(errorHandler.getErrorMessage(e), e))
+                Resource.Error(errorHandler.getErrorMessage(e), e)
             }
     }
 
@@ -82,40 +78,12 @@ class LocationRepositoryImpl(
     }
 
     override fun getCurrentLocation(): Flow<LatLong> {
-//        return callbackFlow {
-//            if (permissionBridge.isLocationPermissionGranted()) {
-//
-//                launch {
-//                    locationTracker.getLocationsFlow()
-//                        .distinctUntilChanged()
-//                        .map { location -> LatLong(location.latitude, location.longitude) }
-//                        .collect { send(it) }
-//                }
-//            } else {
-//
-//                permissionBridge.requestLocationPermission(object : PermissionResultCallback {
-//                    override fun onPermissionGranted() {
-//                        launch {
-//                            locationTracker.getLocationsFlow()
-//                                .distinctUntilChanged()
-//                                .map { location -> LatLong(location.latitude, location.longitude) }
-//                                .collect { send(it) }
-//                        }
-//                    }
-//
-//                    override fun onPermissionDenied(isPermanentDenied: Boolean) {
-//                        println("onPermissionDenied")
-////                        close(Exception("Location permission denied"))
-//                    }
-//                })
-//            }
-//            awaitClose { }
-//        }
         return locationTracker.getLocationsFlow()
             .distinctUntilChanged()
             .map { location ->
                 LatLong(location.latitude, location.longitude)
             }
+
     }
 
     override suspend fun startLocationUpdates() {

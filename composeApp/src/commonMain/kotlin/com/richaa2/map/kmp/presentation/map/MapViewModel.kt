@@ -40,10 +40,6 @@ class MapViewModel constructor(
 
     init {
         loadSavedLocations()
-        getSavedLocationsInfoUseCase()
-        viewModelScope.launch {
-            startLocationUpdatesUseCase()
-        }
     }
 
     override fun onCleared() {
@@ -51,6 +47,11 @@ class MapViewModel constructor(
         stopLocationUpdates()
     }
 
+    fun startLocationUpdates() {
+        viewModelScope.launch {
+            startLocationUpdatesUseCase()
+        }
+    }
 
     private fun stopLocationUpdates() {
         stopLocationUpdatesUseCase()

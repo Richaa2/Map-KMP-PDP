@@ -1,50 +1,18 @@
 package com.richaa2.map.kmp.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.richaa2.map.kmp.core.PermissionBridge
-import com.richaa2.map.kmp.core.PermissionResultCallback
 import com.richaa2.map.kmp.presentation.addLocation.AddLocationScreen
 import com.richaa2.map.kmp.presentation.locationDetails.LocationDetailsScreen
 import com.richaa2.map.kmp.presentation.map.MapScreen
 import com.richaa2.mappdp.navigation.Screen
-import org.koin.compose.getKoin
 
 
 @Composable
 fun AppNavGraph() {
-    val koin = getKoin()
-
-//    var isLocationPermissionGranted by remember {
-//        mutableStateOf(
-//            koin.get<PermissionBridge>().isLocationPermissionGranted()
-//        )
-//    }
-
-//    fun requestPermission() {
-//        koin.get<PermissionBridge>()
-//            .requestLocationPermission(object : PermissionResultCallback {
-//                override fun onPermissionGranted() {
-//                    isLocationPermissionGranted =
-//                        koin.get<PermissionBridge>().isLocationPermissionGranted()
-//                }
-//
-//                override fun onPermissionDenied(
-//                    isPermanentDenied: Boolean
-//                ) {
-//                    isLocationPermissionGranted =
-//                        koin.get<PermissionBridge>().isLocationPermissionGranted()
-//                }
-//            })
-//    }
-
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.Map) {
         composable<Screen.Map> {

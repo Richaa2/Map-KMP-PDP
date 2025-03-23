@@ -18,14 +18,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.richaa2.map.kmp.core.LocationManager
+import com.richaa2.map.kmp.core.LocationPermissionStatus
 import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.domain.model.LocationInfo
 import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
 import com.richaa2.map.kmp.presentation.map.camera.CameraPositionStateSaver
 import com.richaa2.map.kmp.presentation.map.components.MapFloatingActionButton
+import com.richaa2.map.kmp.presentation.map.components.PermissionDeniedDialog
 import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_MAP_LATITUDE
 import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_MAP_LONGITUDE
 import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_ZOOM_LEVEL
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
@@ -33,13 +37,14 @@ import org.koin.core.annotation.KoinExperimentalAPI
 @OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
 fun MapScreen(
-    viewModel: MapViewModel = koinViewModel<MapViewModel>(),
+    viewModel: MapViewModel = koinViewModel(),
+    locationManager: LocationManager = koinInject(),
     onAddLocation: (LatLong) -> Unit,
     onLocationDetails: (LocationInfo) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val errorMessage by viewModel.errorState.collectAsState()
-
+    val permissionStatus by locationManager.locationPermissionStatusState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
     var showPermissionDialog by remember { mutableStateOf(false) }
@@ -49,6 +54,32 @@ fun MapScreen(
         println(
             "currentLocation $currentLocation"
         )
+    }
+
+    LaunchedEffect(permissionStatus) {
+        if (permissionStatus == LocationPermissionStatus.NOT_DETERMINED) {
+            showPermissionDialog = true
+        }
+        if (permissionStatus == LocationPermissionStatus.ACCEPTED) {
+            viewModel.startLocationUpdates()
+        }
+    }
+
+    if (showPermissionDialog) {
+        PermissionDeniedDialog(
+            onDismiss = { showPermissionDialog = false },
+            onRequestPermission = {
+                showPermissionDialog = false
+                locationManager.requestLocationPermission()
+            }
+        )
+    }
+
+    LaunchedEffect(errorMessage) {
+        errorMessage?.let {
+            snackbarHostState.showSnackbar(it)
+            viewModel.clearErrorMessage()
+        }
     }
 
     val cameraPositionState = rememberSaveable(saver = CameraPositionStateSaver) {
@@ -89,7 +120,8 @@ fun MapScreen(
 
         GoogleMaps(
             modifier = Modifier,
-            savedLocations = (uiState as? MapViewModel.MapUiState.Success)?.locations ?: emptyList(),
+            savedLocations = (uiState as? MapViewModel.MapUiState.Success)?.locations
+                ?: emptyList(),
             onMarkerClick = {
                 onLocationDetails(it)
             },

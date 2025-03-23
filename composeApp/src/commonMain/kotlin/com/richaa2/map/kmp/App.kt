@@ -14,12 +14,11 @@ import org.koin.core.annotation.KoinExperimentalAPI
 @Composable
 @Preview
 fun App() {
-    //TODO ERROR HANDLING
+    //TODO FIX UI BUGS
     //TODO ROUTING
-    //TODO SNACKBARS
-    //TODO DIALOGS
     //TODO CUSTOM CLUSTER DESIGN (OPTIONAL)
     //TODO SECURITY FOR API KEYS
+    //TODO STRING FROM RESOURCES
     MaterialTheme {
         AppNavGraph()
     }

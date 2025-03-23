@@ -23,6 +23,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -60,7 +62,7 @@ fun LocationDetailsScreen(
     val uiState by viewModel.uiState.collectAsState()
     val errorMessage by viewModel.errorState.collectAsState()
     var showDeleteDialog by remember { mutableStateOf(false) }
-//    val snackBarHostState = remember { SnackbarHostState() }
+    val snackBarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(key1 = locationId) {
         viewModel.loadLocationDetails(locationId)
@@ -68,7 +70,7 @@ fun LocationDetailsScreen(
 
     LaunchedEffect(errorMessage) {
         errorMessage?.let {
-//            snackBarHostState.showSnackbar(it)
+            snackBarHostState.showSnackbar(it)
             viewModel.clearErrorMessage()
         }
     }
@@ -82,7 +84,7 @@ fun LocationDetailsScreen(
 
     Scaffold(
         modifier = modifier,
-//        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("Location Details") },
