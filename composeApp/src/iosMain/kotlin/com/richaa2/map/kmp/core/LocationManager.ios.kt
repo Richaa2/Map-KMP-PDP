@@ -56,7 +56,7 @@ class LocationManagerDelegate : NSObject(), CLLocationManagerDelegateProtocol {
             }
 
 
-            else -> LocationPermissionStatus.NOT_DETERMINED_IOS
+            else -> LocationPermissionStatus.NOT_DETERMINED
         }
 
     }
@@ -74,7 +74,7 @@ class LocationManagerDelegate : NSObject(), CLLocationManagerDelegateProtocol {
             kCLAuthorizationStatusAuthorizedWhenInUse,
             -> LocationPermissionStatus.ACCEPTED
 
-            else -> LocationPermissionStatus.NOT_DETERMINED_IOS
+            else -> LocationPermissionStatus.NOT_DETERMINED
         }
 
     }

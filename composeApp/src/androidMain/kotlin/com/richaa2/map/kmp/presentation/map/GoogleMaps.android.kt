@@ -33,13 +33,10 @@ actual fun GoogleMaps(
     onMarkerClick: (LocationInfo) -> Unit,
     onMapLongClick: (LatLong) -> Unit,
     cameraPositionState: CameraPositionState,
+    isLocationPermissionGranted: Boolean,
 ) {
 
     val nativeCameraPositionState = rememberCameraPositionState()
-
-
-    val locationPermissionState =
-        rememberPermissionState(permission = Manifest.permission.ACCESS_FINE_LOCATION)
 
     val clusterItems = remember(savedLocations) {
         savedLocations.map { locationInfo ->
@@ -74,8 +71,8 @@ actual fun GoogleMaps(
             cameraPositionState.setNativeMap(it)
         }
 
-        MapEffect(locationPermissionState.status.isGranted) {
-            it.isMyLocationEnabled = locationPermissionState.status.isGranted
+        MapEffect(isLocationPermissionGranted) {
+            it.isMyLocationEnabled = isLocationPermissionGranted
         }
 
         LocationClustering(

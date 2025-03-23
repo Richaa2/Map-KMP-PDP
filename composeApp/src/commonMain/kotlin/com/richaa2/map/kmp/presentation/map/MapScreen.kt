@@ -130,7 +130,8 @@ fun MapScreen(
 
                 onAddLocation(latLong)
             },
-            cameraPositionState = cameraPositionState
+            cameraPositionState = cameraPositionState,
+            isLocationPermissionGranted = permissionStatus == LocationPermissionStatus.ACCEPTED
         )
 
     }

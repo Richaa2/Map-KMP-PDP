@@ -31,6 +31,7 @@ actual fun GoogleMaps(
     onMarkerClick: (LocationInfo) -> Unit,
     onMapLongClick: (LatLong) -> Unit,
     cameraPositionState: CameraPositionState,
+    isLocationPermissionGranted: Boolean,
 ) {
     val mapView = remember { GMSMapView() }
 
@@ -61,6 +62,7 @@ actual fun GoogleMaps(
         cameraPositionState.setNativeMap(mapView)
         mapView.camera = cameraPosition
         mapView.delegate = mapViewDelegate
+
         clusterManager.setMapDelegate(mapViewDelegate as cocoapods.Google_Maps_iOS_Utils.GMSMapViewDelegateProtocol)
 
         clusterManager.clearItems()
@@ -68,13 +70,15 @@ actual fun GoogleMaps(
         clusterManager.addItems(newItems)
         clusterManager.cluster()
     }
+    LaunchedEffect(isLocationPermissionGranted) {
+        mapView.myLocationEnabled = isLocationPermissionGranted
+    }
     UIKitView(
         modifier = modifier.fillMaxSize(),
         factory = {
             println("factory mapView")
             mapView.apply {
                 settings.compassButton = false
-                myLocationEnabled = true
                 delegate = mapViewDelegate
 
             }

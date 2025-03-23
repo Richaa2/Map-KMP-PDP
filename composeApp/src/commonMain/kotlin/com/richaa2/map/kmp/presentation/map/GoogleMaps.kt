@@ -13,4 +13,6 @@ expect fun GoogleMaps(
     onMarkerClick: (LocationInfo) -> Unit,
     onMapLongClick: (LatLong) -> Unit,
     cameraPositionState: CameraPositionState,
+    isLocationPermissionGranted: Boolean,
+
 )
