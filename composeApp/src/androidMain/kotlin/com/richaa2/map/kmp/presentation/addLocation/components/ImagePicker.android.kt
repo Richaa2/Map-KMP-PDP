@@ -27,6 +27,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.richaa2.map.kmp.utils.uriToByteArray
+import mapkmp.composeapp.generated.resources.Res
+import mapkmp.composeapp.generated.resources.remove_image
+import mapkmp.composeapp.generated.resources.tap_to_select_an_image
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 actual fun ImagePicker(
@@ -68,8 +72,7 @@ actual fun ImagePicker(
 
             Icon(
                 imageVector = Icons.Filled.Close,
-                contentDescription = "Remove Image",
-//                contentDescription = stringResource(R.string.remove_image),
+                contentDescription = stringResource(Res.string.remove_image),
                 modifier = Modifier
                     .padding(8.dp)
                     .align(Alignment.TopEnd)
@@ -91,8 +94,7 @@ actual fun ImagePicker(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Tap to select image",
-//                    text = stringResource(R.string.tap_to_select_an_image),
+                    text = stringResource(Res.string.tap_to_select_an_image),
                     color = MaterialTheme.colorScheme.onSurface
                 )
             }

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-actual class LocationManager actual constructor(private val dbClient: DbClient) {
+actual class LocationManager (private val dbClient: DbClient) {
 
     private val _locationPermissionStatusState = MutableStateFlow(getCurrentPermissionStatus())
     actual val locationPermissionStatusState: StateFlow<LocationPermissionStatus> =

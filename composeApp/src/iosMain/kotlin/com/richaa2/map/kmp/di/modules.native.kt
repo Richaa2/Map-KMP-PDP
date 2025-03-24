@@ -1,6 +1,6 @@
 package com.richaa2.map.kmp.di
 
-//import com.richaa2.map.kmp.dependecies.getDatabaseBuilder
+import com.richaa2.map.kmp.core.LocationManager
 import com.richaa2.map.kmp.dependecies.DbClient
 import com.richaa2.map.kmp.dependecies.DriverFactory
 import dev.icerock.moko.geo.LocationTracker
@@ -20,4 +20,6 @@ actual val platformModule: Module = module {
             accuracy = kCLLocationAccuracyBest
         )
     }
+    singleOf(::LocationManager)
 }
+

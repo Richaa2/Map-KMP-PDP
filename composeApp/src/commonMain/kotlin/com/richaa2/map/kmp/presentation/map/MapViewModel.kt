@@ -15,6 +15,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import mapkmp.composeapp.generated.resources.Res
+import mapkmp.composeapp.generated.resources.location_disabled_message
+import org.jetbrains.compose.resources.getString
 
 class MapViewModel constructor(
     private val getSavedLocationsInfoUseCase: GetSavedLocationsInfoUseCase,
@@ -85,8 +88,7 @@ class MapViewModel constructor(
 
     fun onLocationDisabledMessage() {
         viewModelScope.launch {
-            _errorState.value = "Location disabled"
-//                resourceProvider.getString(R.string.location_disabled_message)
+            getString(Res.string.location_disabled_message)
         }
     }
 

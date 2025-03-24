@@ -29,6 +29,10 @@ import com.richaa2.map.kmp.presentation.map.components.PermissionDeniedDialog
 import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_MAP_LATITUDE
 import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_MAP_LONGITUDE
 import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_ZOOM_LEVEL
+import mapkmp.composeapp.generated.resources.Res
+import mapkmp.composeapp.generated.resources.allStringResources
+import mapkmp.composeapp.generated.resources.map
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -91,11 +95,11 @@ fun MapScreen(
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("MAP") },
+                title = { Text(stringResource(Res.string.map)) },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colors.primary,
                     titleContentColor = MaterialTheme.colors.onPrimary,

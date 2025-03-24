@@ -37,7 +37,17 @@ import androidx.compose.ui.unit.dp
 import com.richaa2.map.kmp.presentation.addLocation.components.ImagePicker
 import com.richaa2.map.kmp.presentation.addLocation.utils.MAX_TITLE_LENGTH
 import com.richaa2.mappdp.designsystem.components.LoadingContent
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Save
 import kotlinx.coroutines.flow.collectLatest
+import mapkmp.composeapp.generated.resources.Res
+import mapkmp.composeapp.generated.resources.add_location
+import mapkmp.composeapp.generated.resources.back
+import mapkmp.composeapp.generated.resources.description_optional
+import mapkmp.composeapp.generated.resources.edit_location
+import mapkmp.composeapp.generated.resources.save_location
+import mapkmp.composeapp.generated.resources.title
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
@@ -79,14 +89,12 @@ fun AddLocationScreen(
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(if (locationId == null) "Add Location" else "Edit Location") },
-//                title = { Text(if (locationId == null) stringResource(R.string.add_location) else stringResource(R.string.edit_location)) },
+                title = { Text(if (locationId == null) stringResource(Res.string.add_location) else stringResource(Res.string.edit_location)) },
                 navigationIcon = {
                     IconButton(onClick = { viewModel.onNavigateBack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "",
-//                            contentDescription = stringResource(R.string.back),
+                            contentDescription = stringResource(Res.string.back),
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
@@ -108,9 +116,8 @@ fun AddLocationScreen(
             ) {
                 Icon(
 
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Save location"
-//                    contentDescription = stringResource(R.string.save_location)
+                    imageVector = FeatherIcons.Save,
+                    contentDescription = stringResource(Res.string.save_location)
                 )
             }
         },
@@ -173,8 +180,7 @@ fun AddLocationContent(
                 onValueChange = {
                     if (it.length <= MAX_TITLE_LENGTH) onTitleChange(it)
                 },
-                label = { Text("title") },
-//                label = { Text(stringResource(R.string.title)) },
+                label = { Text(stringResource(Res.string.title)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 isError = formState.titleError != null,
@@ -191,8 +197,7 @@ fun AddLocationContent(
             OutlinedTextField(
                 value = formState.description,
                 onValueChange = onDescriptionChange,
-                label = { Text("Description Optional") },
-//                label = { Text(stringResource(R.string.description_optional)) },
+                label = { Text(stringResource(Res.string.description_optional)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(min = 150.dp),

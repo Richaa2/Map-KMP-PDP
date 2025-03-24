@@ -15,6 +15,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import mapkmp.composeapp.generated.resources.Res
+import mapkmp.composeapp.generated.resources.title_cannot_be_empty
+import org.jetbrains.compose.resources.getString
 
 class AddLocationViewModel  constructor(
     private val saveLocationInfoUseCase: SaveLocationInfoUseCase,
@@ -87,54 +90,55 @@ class AddLocationViewModel  constructor(
     }
 
     fun saveLocation(latitude: Double, longitude: Double) {
-        if (_uiState.value is AddLocationState.Loading) return
-        val title = _formState.value.title.trim()
-        val description = _formState.value.description.trim()
-
-        if (title.isEmpty()) {
-            _formState.value = _formState.value.copy(titleError = "title cannot be empty")
-//            _formState.value = _formState.value.copy(titleError = resourceProvider.getString(R.string.title_cannot_be_empty))
-            return
-        } else {
-            _formState.value = _formState.value.copy(titleError = null)
-        }
-        _uiState.value = AddLocationState.Loading
-
         viewModelScope.launch {
-            val result =  editLocation?.let {
-                updateLocationInfoUseCase(
-                    it.copy(
-                        title = title,
-                        description = description,
-//                        imageUrl = null
-                        imageUrl = _formState.value.image
-                    )
-                )
-            } ?: run {
-                saveLocationInfoUseCase(
-                    LocationInfo(
-                        title = title,
-                        description = description,
-                        latitude = latitude,
-                        longitude = longitude,
-                        imageUrl = _formState.value.image,
-                    )
-                )
+            if (_uiState.value is AddLocationState.Loading) return@launch
+            val title = _formState.value.title.trim()
+            val description = _formState.value.description.trim()
+
+            if (title.isEmpty()) {
+                _formState.value = _formState.value.copy(titleError = getString(Res.string.title_cannot_be_empty))
+                return@launch
+            } else {
+                _formState.value = _formState.value.copy(titleError = null)
             }
+            _uiState.value = AddLocationState.Loading
 
-            when (result) {
-                is Resource.Success -> {
-                    onNavigateBack()
+            viewModelScope.launch {
+                val result =  editLocation?.let {
+                    updateLocationInfoUseCase(
+                        it.copy(
+                            title = title,
+                            description = description,
+                            imageUrl = _formState.value.image
+                        )
+                    )
+                } ?: run {
+                    saveLocationInfoUseCase(
+                        LocationInfo(
+                            title = title,
+                            description = description,
+                            latitude = latitude,
+                            longitude = longitude,
+                            imageUrl = _formState.value.image,
+                        )
+                    )
                 }
 
-                is Resource.Error -> {
-                    _errorState.value = result.message
-                    _uiState.value = AddLocationState.Success
-                }
+                when (result) {
+                    is Resource.Success -> {
+                        onNavigateBack()
+                    }
 
-                Resource.Loading -> Unit
+                    is Resource.Error -> {
+                        _errorState.value = result.message
+                        _uiState.value = AddLocationState.Success
+                    }
+
+                    Resource.Loading -> Unit
+                }
             }
         }
+
     }
 
     fun onNavigateBack() {

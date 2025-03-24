@@ -1,5 +1,6 @@
 package com.richaa2.map.kmp.presentation.map.components
 
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.FloatingActionButton
@@ -13,6 +14,9 @@ import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
 import com.richaa2.map.kmp.presentation.map.utils.ANIMATION_TO_CURRENT_LOCATION_DURATION_MS
 import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_ZOOM_LEVEL
 import kotlinx.coroutines.launch
+import mapkmp.composeapp.generated.resources.Res
+import mapkmp.composeapp.generated.resources.current_location
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun MapFloatingActionButton(
@@ -44,14 +48,13 @@ fun MapFloatingActionButton(
                 }
             }
         },
-        modifier = modifier,
+        modifier = modifier.navigationBarsPadding(),
         containerColor = buttonColor,
         contentColor = MaterialTheme.colorScheme.onPrimary
     ) {
         Icon(
             imageVector = Icons.Filled.LocationOn,
-            contentDescription = "Current Location"
-//            contentDescription = stringResource(R.string.current_location)
+            contentDescription = stringResource(Res.string.current_location)
         )
     }
 }

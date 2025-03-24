@@ -4,8 +4,12 @@ import GoogleMaps
 @main
 struct iOSApp: App {
    init() {
-
-        GMSServices.provideAPIKey("AIzaSyC6E2oBFBEpA96NQZ-ELZpxx5vOyXs2LC8")
+       guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+             let plist = NSDictionary(contentsOfFile: path),
+             let apiKey = plist["apiKey"] as? String else {
+           fatalError("Could not load apiKey from Secrets.plist")
+       }
+        GMSServices.provideAPIKey(apiKey)
     }
 
 

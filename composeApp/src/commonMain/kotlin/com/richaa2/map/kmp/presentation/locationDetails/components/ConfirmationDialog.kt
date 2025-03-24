@@ -4,6 +4,10 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import mapkmp.composeapp.generated.resources.Res
+import mapkmp.composeapp.generated.resources.no
+import mapkmp.composeapp.generated.resources.yes
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ConfirmationDialog(
@@ -18,12 +22,12 @@ fun ConfirmationDialog(
         text = { Text(text = message) },
         confirmButton = {
             TextButton(onClick = { onConfirm() }) {
-//                Text(stringResource(R.string.yes))
+                Text(stringResource(Res.string.yes))
             }
         },
         dismissButton = {
             TextButton(onClick = { onDismiss() }) {
-//                Text(stringResource(R.string.no))
+                Text(stringResource(Res.string.no))
             }
         }
     )

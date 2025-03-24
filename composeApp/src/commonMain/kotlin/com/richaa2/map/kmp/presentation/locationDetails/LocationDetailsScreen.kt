@@ -46,6 +46,16 @@ import com.richaa2.map.kmp.presentation.locationDetails.components.ConfirmationD
 import com.richaa2.mappdp.designsystem.components.LoadingContent
 import com.richaa2.mappdp.designsystem.components.NotFoundContent
 import kotlinx.coroutines.flow.collectLatest
+import mapkmp.composeapp.generated.resources.Res
+import mapkmp.composeapp.generated.resources.are_you_sure_you_want_to_delete_this_location
+import mapkmp.composeapp.generated.resources.back
+import mapkmp.composeapp.generated.resources.confirm_delete
+import mapkmp.composeapp.generated.resources.delete_location
+import mapkmp.composeapp.generated.resources.description_empty
+import mapkmp.composeapp.generated.resources.edit_location
+import mapkmp.composeapp.generated.resources.location_details
+import mapkmp.composeapp.generated.resources.no_image_for_this_location
+import mapkmp.composeapp.generated.resources.selected_image
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -87,14 +97,12 @@ fun LocationDetailsScreen(
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Location Details") },
-//                title = { Text(stringResource(R.string.location_details)) },
+                title = { Text(stringResource(Res.string.location_details)) },
                 navigationIcon = {
                     IconButton(onClick = { onBack() }) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "back"
-//                            contentDescription = stringResource(R.string.back)
+                            contentDescription = stringResource(Res.string.back)
                         )
                     }
                 },
@@ -106,7 +114,7 @@ fun LocationDetailsScreen(
                             }) {
                                 Icon(
                                     Icons.Filled.Delete,
-                                    contentDescription = "Delete Location"
+                                    contentDescription = stringResource(Res.string.delete_location)
                                 )
                             }
                         }
@@ -136,7 +144,7 @@ fun LocationDetailsScreen(
                     ) {
                         Icon(
                             Icons.Filled.Edit,
-                            contentDescription = "Edit Location"
+                            contentDescription = stringResource(Res.string.edit_location)
                         )
                     }
                 }
@@ -162,10 +170,8 @@ fun LocationDetailsScreen(
         }
         if (showDeleteDialog) {
             ConfirmationDialog(
-                title = "Confirm Delete",
-//                title = stringResource(R.string.confirm_delete),
-                message = "are_you_sure_you_want_to_delete_this_location",
-//                message = stringResource(R.string.are_you_sure_you_want_to_delete_this_location),
+                title = stringResource(Res.string.confirm_delete),
+                message = stringResource(Res.string.are_you_sure_you_want_to_delete_this_location),
                 onConfirm = {
                     viewModel.deleteLocation(locationId)
                     showDeleteDialog = false
@@ -201,8 +207,7 @@ fun LocationDetailContent(
             if (location.imageUrl != null) {
                 Image(
                     bitmap = location.imageUrl.toImageBitmap(),
-                    contentDescription = "selected_image",
-//                    contentDescription = stringResource(R.string.selected_image),
+                    contentDescription = stringResource(Res.string.selected_image),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxSize()
@@ -219,8 +224,7 @@ fun LocationDetailContent(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "no_image_for_this_location",
-//                        text = stringResource(R.string.no_image_for_this_location),
+                        text = stringResource(Res.string.no_image_for_this_location),
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
@@ -235,7 +239,7 @@ fun LocationDetailContent(
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = location.description ?: "stringResource(R.string.description_empty)",
+            text = location.description ?: stringResource(Res.string.description_empty),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground
         )

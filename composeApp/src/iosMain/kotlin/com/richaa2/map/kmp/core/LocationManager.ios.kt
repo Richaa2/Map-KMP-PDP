@@ -13,7 +13,7 @@ import platform.CoreLocation.kCLAuthorizationStatusRestricted
 import platform.CoreLocation.kCLLocationAccuracyBest
 import platform.darwin.NSObject
 
-actual class LocationManager actual constructor(dbClient: DbClient) {
+actual class LocationManager {
     private val locationManagerDelegate = LocationManagerDelegate()
     actual val locationPermissionStatusState: StateFlow<LocationPermissionStatus>
         get() = locationManagerDelegate.locationPermissionStatusState
