@@ -16,6 +16,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -55,6 +57,7 @@ import mapkmp.composeapp.generated.resources.description_empty
 import mapkmp.composeapp.generated.resources.edit_location
 import mapkmp.composeapp.generated.resources.location_details
 import mapkmp.composeapp.generated.resources.no_image_for_this_location
+import mapkmp.composeapp.generated.resources.route_to_location
 import mapkmp.composeapp.generated.resources.selected_image
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -66,7 +69,9 @@ fun LocationDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: LocationDetailsViewModel = koinViewModel<LocationDetailsViewModel>(),
     locationId: Long,
+    userPosition: LatLong?,
     onBack: () -> Unit,
+    onNavToRoute: (LatLong, LatLong) -> Unit,
     onEdit: (LatLong, Long) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -75,7 +80,7 @@ fun LocationDetailsScreen(
     val snackBarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(key1 = locationId) {
-        viewModel.loadLocationDetails(locationId)
+        viewModel.loadLocationDetails(locationId, userPosition)
     }
 
     LaunchedEffect(errorMessage) {
@@ -89,6 +94,12 @@ fun LocationDetailsScreen(
             if (shouldNavigateBack) {
                 onBack()
             }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.onNavigateToRouteAction.collectLatest { destinationPosition ->
+            onNavToRoute(userPosition!!, destinationPosition)
         }
     }
 
@@ -156,8 +167,12 @@ fun LocationDetailsScreen(
             is LocationDetailsViewModel.LocationDetailsState.Success -> {
                 LocationDetailContent(
                     modifier = Modifier.padding(innerPadding),
-                    location = state.location
-                )
+                    location = state.location,
+                    userPosition = userPosition,
+                    onNavToRoute = {
+                        viewModel.getRouteToLocation()
+                    },
+                    )
             }
 
             is LocationDetailsViewModel.LocationDetailsState.Loading -> {
@@ -188,6 +203,8 @@ fun LocationDetailsScreen(
 fun LocationDetailContent(
     modifier: Modifier = Modifier,
     location: LocationInfo,
+    userPosition: LatLong?,
+    onNavToRoute: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -242,6 +259,24 @@ fun LocationDetailContent(
             text = location.description ?: stringResource(Res.string.description_empty),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = if (userPosition != null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            ),
+            onClick = {
+                onNavToRoute()
+            },
+            modifier = Modifier.fillMaxWidth(),
+            content = {
+                Text(
+                    text = stringResource(Res.string.route_to_location),
+                    style = MaterialTheme.typography.bodyLarge,
+
+                    )
+            }
         )
 
     }

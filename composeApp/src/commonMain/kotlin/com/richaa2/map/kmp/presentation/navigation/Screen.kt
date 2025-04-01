@@ -7,7 +7,13 @@ import kotlinx.serialization.Serializable
 sealed class Screen {
 
     @Serializable
-    data object Map : Screen()
+    data class Map(
+        val userPositionLatitude: Float? = null,
+        val userPositionLongitude: Float? = null,
+        val destinationPositionLatitude: Float? = null,
+        val destinationPositionLongitude: Float? = null,
+    ) : Screen()
+
 
     @Serializable
     data class AddLocation(
@@ -17,5 +23,10 @@ sealed class Screen {
     ) : Screen()
 
     @Serializable
-    data class LocationDetails(val locationId: Long) : Screen()
+    data class LocationDetails(
+        val locationId: Long,
+        val userPositionLatitude: Float?,
+        val userPositionLongitude: Float?,
+    ) : Screen()
+
 }

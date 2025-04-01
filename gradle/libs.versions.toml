@@ -1,4 +1,5 @@
 [versions]
+accompanistPermissions = "0.28.0"
 agp = "8.6.0"
 android-compileSdk = "35"
 android-minSdk = "28"
@@ -25,8 +26,6 @@ lifecycleViewModel = "2.8.2"
 androidxRoom = "2.7.0-alpha13"
 sqlite = "2.5.0-alpha13"
 ksp = "2.1.0-1.0.29"
-roomCommon = "2.6.1"
-roomKtx = "2.6.1"
 secrets = "2.0.1"
 material3Android = "1.3.1"
 mapsComposeVersion = "6.1.2"
@@ -35,8 +34,10 @@ pods-google-maps = "9.1.1"
 pods-google-maps-utils = "6.0.0"
 sqldelight = "2.0.2"
 serialization = "1.6.3"
+ktor-client = "2.3.6"
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 feather = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "feather" }
 geo-compose = { module = "dev.icerock.moko:geo-compose", version.ref = "geoCompose" }
 geo = { module = "dev.icerock.moko:geo", version.ref = "geo" }
@@ -79,6 +80,14 @@ sqldelight-native = { module = "app.cash.sqldelight:native-driver", version.ref 
 sqldelight-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
+
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-client" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor-client" }
+ktor-client-encoding = { module = "io.ktor:ktor-client-encoding", version.ref = "ktor-client" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor-client" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor-client" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-client" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-client" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

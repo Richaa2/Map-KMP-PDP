@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.presentation.addLocation.AddLocationScreen
 import com.richaa2.map.kmp.presentation.locationDetails.LocationDetailsScreen
 import com.richaa2.map.kmp.presentation.map.MapScreen
@@ -14,9 +15,19 @@ import com.richaa2.mappdp.navigation.Screen
 @Composable
 fun AppNavGraph() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.Map) {
-        composable<Screen.Map> {
+    NavHost(navController = navController, startDestination = Screen.Map()) {
+        composable<Screen.Map> { backStackEntry ->
+            val args = backStackEntry.toRoute<Screen.Map>()
             MapScreen(
+
+                userPosition = LatLong.build(
+                    args.userPositionLatitude,
+                    args.userPositionLongitude
+                ),
+                routePosition = LatLong.build(
+                    args.destinationPositionLatitude,
+                    args.destinationPositionLongitude
+                ),
                 onAddLocation = { latLng ->
                     navController.navigate(
                         Screen.AddLocation(
@@ -25,10 +36,17 @@ fun AppNavGraph() {
                         )
                     )
                 },
-                onLocationDetails = { location ->
+                onLocationDetails = { location, userPosition ->
                     navController.navigate(
-                        Screen.LocationDetails(location.id)
+                        Screen.LocationDetails(
+                            locationId = location.id,
+                            userPositionLatitude = userPosition?.latitude?.toFloat(),
+                            userPositionLongitude = userPosition?.longitude?.toFloat()
+                        )
                     )
+                },
+                onMapScreen = {
+                    navController.navigate(Screen.Map())
                 }
             )
         }
@@ -48,6 +66,17 @@ fun AppNavGraph() {
 
             LocationDetailsScreen(
                 locationId = args.locationId,
+                userPosition = LatLong.build(args.userPositionLatitude, args.userPositionLongitude),
+                onNavToRoute = { userPosition, destinationPosition ->
+                    navController.navigate(
+                        Screen.Map(
+                            userPositionLatitude = userPosition.latitude.toFloat(),
+                            userPositionLongitude = userPosition.longitude.toFloat(),
+                            destinationPositionLatitude = destinationPosition.latitude.toFloat(),
+                            destinationPositionLongitude = destinationPosition.longitude.toFloat()
+                        )
+                    )
+                },
                 onBack = {
                     if (navController.previousBackStackEntry != null) navController.popBackStack()
                 },

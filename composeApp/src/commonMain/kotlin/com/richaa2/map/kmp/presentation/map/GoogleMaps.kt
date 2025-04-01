@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.domain.model.LocationInfo
 import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
+import dev.icerock.moko.geo.LatLng
 
 @Composable
 expect fun GoogleMaps(
@@ -14,5 +15,5 @@ expect fun GoogleMaps(
     onMapLongClick: (LatLong) -> Unit,
     cameraPositionState: CameraPositionState,
     isLocationPermissionGranted: Boolean,
-
+    polylineCoordinates: List<LatLng>?,
 )

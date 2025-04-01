@@ -19,7 +19,9 @@ import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.domain.model.LocationInfo
 import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
 import com.richaa2.map.kmp.presentation.map.clustering.IOSLocationClusterItem
+import com.richaa2.map.kmp.presentation.map.polyline.PolylineUtils
 import com.richaa2.map.kmp.presentation.map.utils.MapViewDelegate
+import dev.icerock.moko.geo.LatLng
 import kotlinx.cinterop.ExperimentalForeignApi
 
 
@@ -32,6 +34,7 @@ actual fun GoogleMaps(
     onMapLongClick: (LatLong) -> Unit,
     cameraPositionState: CameraPositionState,
     isLocationPermissionGranted: Boolean,
+    polylineCoordinates: List<LatLng>?
 ) {
     val mapView = remember { GMSMapView() }
 
@@ -73,6 +76,13 @@ actual fun GoogleMaps(
     LaunchedEffect(isLocationPermissionGranted) {
         mapView.myLocationEnabled = isLocationPermissionGranted
     }
+
+    LaunchedEffect(polylineCoordinates) {
+        if (polylineCoordinates?.isNotEmpty() == true) {
+            PolylineUtils.drawPolyline(coordinates = polylineCoordinates, map = mapView)
+            PolylineUtils.fitCameraToPolyline(polylineCoordinates, mapView)
+        }
+    }
     UIKitView(
         modifier = modifier.fillMaxSize(),
         factory = {
@@ -96,4 +106,6 @@ actual fun GoogleMaps(
         ),
 
         )
+
+
 }

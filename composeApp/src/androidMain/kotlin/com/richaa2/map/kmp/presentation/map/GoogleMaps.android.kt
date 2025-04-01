@@ -1,18 +1,11 @@
 package com.richaa2.map.kmp.presentation.map
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapEffect
 import com.google.maps.android.compose.MapUiSettings
@@ -23,6 +16,9 @@ import com.richaa2.map.kmp.domain.model.LocationInfo
 import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
 import com.richaa2.map.kmp.presentation.map.clustering.LocationClusterItem
 import com.richaa2.map.kmp.presentation.map.clustering.LocationClustering
+import com.richaa2.map.kmp.presentation.map.polyline.PolylineUtils
+import com.richaa2.map.kmp.presentation.map.polyline.PolylineUtils.fitCameraToPolyline
+import dev.icerock.moko.geo.LatLng
 
 @OptIn(MapsComposeExperimentalApi::class, ExperimentalPermissionsApi::class)
 @SuppressLint("MissingPermission")
@@ -34,6 +30,7 @@ actual fun GoogleMaps(
     onMapLongClick: (LatLong) -> Unit,
     cameraPositionState: CameraPositionState,
     isLocationPermissionGranted: Boolean,
+    polylineCoordinates: List<LatLng>?
 ) {
 
     val nativeCameraPositionState = rememberCameraPositionState()
@@ -69,6 +66,14 @@ actual fun GoogleMaps(
     ) {
         MapEffect(Unit) {
             cameraPositionState.setNativeMap(it)
+        }
+
+        MapEffect(polylineCoordinates) {
+            if (polylineCoordinates?.isNotEmpty() == true) {
+                PolylineUtils.drawPolyline(coordinates = polylineCoordinates, map = it)
+                fitCameraToPolyline(polylineCoordinates, it)
+
+            }
         }
 
         MapEffect(isLocationPermissionGranted) {

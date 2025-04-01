@@ -22,6 +22,8 @@
     <string name="grant_permission">Grant Permission</string>
     <string name="dismiss">Dismiss</string>
     <string name="map">Map</string>
+    <string name="route">Route</string>
+    <string name="loading">Loading</string>
     <string name="description_optional">Description (Optional)</string>
     <string name="title">Title</string>
     <string name="save_location">Save Location</string>
@@ -30,5 +32,6 @@
     <string name="tap_to_select_an_image">Tap to select an image</string>
     <string name="not_found">Not Found</string>
     <string name="content_not_found">Content not found</string>
-
+    <string name="user_position_not_found">User position not found</string>
+    <string name="route_to_location">Route to location</string>
 </resources>
