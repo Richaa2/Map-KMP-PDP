@@ -1,8 +1,10 @@
 package com.richaa2.map.kmp.data.repository
 
-import com.richaa2.map.kmp.core.common.ErrorHandler
-import com.richaa2.map.kmp.data.mapper.LocationMapper.fromEntityToDomain
-import com.richaa2.map.kmp.data.source.local.LocationDataSource
+import com.richaa2.map.kmp.core.error.ErrorHandler
+import com.richaa2.map.kmp.data.source.local.LocationDataSourceImpl
+import com.richaa2.map.kmp.data.source.local.model.mapper.LocationMapper.fromDomainToLocal
+import com.richaa2.map.kmp.data.source.local.model.mapper.LocationMapper.fromLocalToDomain
+import com.richaa2.map.kmp.data.source.local.model.mapper.LocationMapper.fromSqldelightToLocal
 import com.richaa2.map.kmp.domain.common.Resource
 import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.domain.model.LocationInfo
@@ -21,7 +23,7 @@ import kotlinx.coroutines.withContext
 
 
 class LocationRepositoryImpl(
-    private val locationDataSource: LocationDataSource,
+    private val locationDataSourceImpl: LocationDataSourceImpl,
     private val errorHandler: ErrorHandler,
     private val locationTracker: LocationTracker,
 
@@ -31,7 +33,10 @@ class LocationRepositoryImpl(
     override suspend fun getLocationInfoById(id: Long): Resource<LocationInfo?> {
         return withContext(Dispatchers.IO) {
             try {
-                Resource.Success(locationDataSource.getLocationById(id)?.fromEntityToDomain())
+                Resource.Success(
+                    locationDataSourceImpl.getLocationById(id)?.fromSqldelightToLocal()
+                        ?.fromLocalToDomain()
+                )
             } catch (e: Exception) {
                 Resource.Error(errorHandler.getErrorMessage(e), e)
             }
@@ -40,11 +45,13 @@ class LocationRepositoryImpl(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getSavedLocationsInfo(): Flow<Resource<List<LocationInfo>>> {
-        return locationDataSource.getAllLocations()
+        return locationDataSourceImpl.getAllLocations()
             .flatMapLatest { entities ->
                 flow {
                     emit(Resource.Loading)
-                    val locations = entities.map { entity -> entity.fromEntityToDomain() }
+                    val locations = entities.map { entity ->
+                        entity.fromSqldelightToLocal().fromLocalToDomain()
+                    }
                     emit(Resource.Success(locations))
                 }
             }.catch { e ->
@@ -54,11 +61,11 @@ class LocationRepositoryImpl(
 
     override suspend fun upsertLocation(locationInfo: LocationInfo): Resource<Unit> {
         return try {
-            println("${locationInfo.id.let { locationDataSource.isExistLocationById(it) }}")
-            if (locationInfo.id.let { locationDataSource.isExistLocationById(it) }) {
-                locationDataSource.updateLocation(locationInfo)
+            println("${locationInfo.id.let { locationDataSourceImpl.isExistLocationById(it) }}")
+            if (locationInfo.id.let { locationDataSourceImpl.isExistLocationById(it) }) {
+                locationDataSourceImpl.updateLocation(locationInfo.fromDomainToLocal())
             } else {
-                locationDataSource.insertLocation(locationInfo)
+                locationDataSourceImpl.insertLocation(locationInfo.fromDomainToLocal())
             }
             Resource.Success(Unit)
         } catch (e: Exception) {
@@ -68,7 +75,7 @@ class LocationRepositoryImpl(
 
     override suspend fun deleteLocationInfoById(id: Long): Resource<Unit> {
         return try {
-            locationDataSource.deleteLocationById(id)
+            locationDataSourceImpl.deleteLocationById(id)
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(errorHandler.getErrorMessage(e), e)
@@ -84,7 +91,6 @@ class LocationRepositoryImpl(
     }
 
     override suspend fun startLocationUpdates() {
-        println("startLocationUpdates")
         locationTracker.startTracking()
     }
 

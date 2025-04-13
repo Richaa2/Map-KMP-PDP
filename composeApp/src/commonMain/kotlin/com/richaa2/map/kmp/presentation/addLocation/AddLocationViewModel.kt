@@ -2,7 +2,6 @@ package com.richaa2.map.kmp.presentation.addLocation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.richaa2.map.kmp.core.byteArrayToBase64
 import com.richaa2.map.kmp.domain.common.Resource
 import com.richaa2.map.kmp.domain.model.LocationInfo
 import com.richaa2.map.kmp.domain.usecase.GetLocationInfoUseCase
@@ -23,7 +22,6 @@ class AddLocationViewModel  constructor(
     private val saveLocationInfoUseCase: SaveLocationInfoUseCase,
     private val updateLocationInfoUseCase: UpdateLocationInfoUseCase,
     private val getLocationInfoUseCase: GetLocationInfoUseCase,
-//    private val resourceProvider: ResourceProvider,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<AddLocationState>(AddLocationState.Loading)

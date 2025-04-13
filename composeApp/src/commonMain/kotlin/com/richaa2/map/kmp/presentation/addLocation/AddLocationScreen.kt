@@ -217,17 +217,3 @@ fun AddLocationContent(
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun AddLocationContentPreview() {
-//    MapPDPTheme {
-//        AddLocationContent(
-//            formState = AddLocationFormState(),
-//            onTitleChange = {},
-//            onDescriptionChange = {},
-//            onImageSelected = {},
-//            onRemoveSelectedImage = {}
-//        )
-//    }
-//}

@@ -20,11 +20,3 @@ fun LoadingContent(innerPadding: PaddingValues) {
         CircularProgressIndicator()
     }
 }
-//
-//@Preview(showBackground = true)
-//@Composable
-//private fun LoadingScreenPreview() {
-//    MapPDPTheme {
-//        LoadingContent(innerPadding = PaddingValues())
-//    }
-//}

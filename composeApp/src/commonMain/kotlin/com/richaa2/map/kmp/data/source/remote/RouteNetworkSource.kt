@@ -21,10 +21,16 @@ class RouteNetworkSource(private val client: HttpClient) {
             origin = origin, destination = destination
         )
 
-        return client.post("https://routes.googleapis.com/directions/v2:computeRoutes") {
+        return client.post(BASE_URL) {
             header(HttpHeaders.ContentType, ContentType.Application.Json)
-            header("X-Goog-FieldMask", "routes.distanceMeters,routes.polyline.encodedPolyline")
+            header(HEADER_FIELD_MASK_KEY, HEADER_FIELD_MASK_VALUE)
             setBody(requestBody)
         }.body()
+    }
+
+    companion object {
+        private const val BASE_URL = "https://routes.googleapis.com/directions/v2:computeRoutes"
+        private const val HEADER_FIELD_MASK_KEY = "X-Goog-FieldMask"
+        private const val HEADER_FIELD_MASK_VALUE = "routes.distanceMeters,routes.polyline.encodedPolyline"
     }
 }

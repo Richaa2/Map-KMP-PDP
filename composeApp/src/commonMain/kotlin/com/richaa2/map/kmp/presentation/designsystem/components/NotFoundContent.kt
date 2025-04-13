@@ -47,12 +47,3 @@ fun NotFoundContent(modifier: Modifier = Modifier) {
         }
     }
 }
-
-
-//@Preview(showBackground = true)
-//@Composable
-//private fun NotFoundContentPreview() {
-//    MapPDPTheme {
-//        NotFoundContent()
-//    }
-//}

@@ -9,8 +9,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
     //TODO CAMERA POSITION FROM MEMORY
-    //TODO PREVIEW
-    //TODO CLEAN PROJECT
+    //TODO CHANGE ERROR HANDLER TO APPVIEWMODEL
     MapPDPTheme  {
         AppNavGraph()
     }

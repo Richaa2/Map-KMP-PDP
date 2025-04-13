@@ -1,6 +1,6 @@
-package com.richaa2.map.kmp.domain.model
+package com.richaa2.map.kmp.data.source.local.model
 
-data class LocationInfo(
+data class LocalLocationInfo (
     val id: Long = 0,
     val latitude: Double,
     val longitude: Double,
@@ -12,7 +12,7 @@ data class LocationInfo(
         if (this === other) return true
         if (other == null || this::class != other::class) return false
 
-        other as LocationInfo
+        other as LocalLocationInfo
 
         if (id != other.id) return false
         if (latitude != other.latitude) return false
@@ -36,7 +36,4 @@ data class LocationInfo(
         result = 31 * result + (imageUrl?.contentHashCode() ?: 0)
         return result
     }
-
-
-
 }

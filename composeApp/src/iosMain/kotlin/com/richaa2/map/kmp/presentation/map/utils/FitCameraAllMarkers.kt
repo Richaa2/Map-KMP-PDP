@@ -18,7 +18,7 @@ actual fun fitCameraAllMarkers(markerList: List<NativeMarker>, map: NativeMap) {
         }
 
     bounds?.let {
-        val padding: CGFloat = 100.0
+        val padding: CGFloat = DEFAULT_MAP_PADDING
         map.animateWithCameraUpdate(GMSCameraUpdate.fitBounds(it, padding))
     }
 }

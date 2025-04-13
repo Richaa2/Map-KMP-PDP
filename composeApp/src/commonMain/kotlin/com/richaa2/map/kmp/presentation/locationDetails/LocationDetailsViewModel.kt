@@ -18,7 +18,7 @@ import mapkmp.composeapp.generated.resources.Res
 import mapkmp.composeapp.generated.resources.user_position_not_found
 import org.jetbrains.compose.resources.getString
 
-class LocationDetailsViewModel constructor(
+class LocationDetailsViewModel(
     private val getLocationInfoUseCase: GetLocationInfoUseCase,
     private val deleteLocationInfoUseCase: DeleteLocationInfoUseCase,
 ) : ViewModel() {

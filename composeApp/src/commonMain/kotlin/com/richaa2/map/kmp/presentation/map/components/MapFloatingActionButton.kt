@@ -58,37 +58,3 @@ fun MapFloatingActionButton(
         )
     }
 }
-
-//
-//@Preview()
-//@Composable
-//fun MapFloatingActionButtonPreview() {
-//    val testLocation = Location("").apply {
-//        latitude = 50.4501
-//        longitude = 30.5234
-//    }
-//
-//    val cameraPositionState = rememberCameraPositionState()
-//    MapFloatingActionButton(
-//        cameraPositionState = cameraPositionState,
-//        currentLocation = testLocation,
-//        modifier = Modifier.padding(16.dp),
-//        onDisabledClick = {}
-//
-//    )
-//}
-//
-//@Preview()
-//@Composable
-//fun MapFloatingActionButtonDisabledPreview() {
-//
-//    val cameraPositionState = rememberCameraPositionState()
-//
-//    MapFloatingActionButton(
-//        cameraPositionState = cameraPositionState,
-//        currentLocation = null,
-//        modifier = Modifier.padding(16.dp),
-//        onDisabledClick = {}
-//
-//    )
-//}

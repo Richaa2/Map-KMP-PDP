@@ -23,7 +23,7 @@ import mapkmp.composeapp.generated.resources.Res
 import mapkmp.composeapp.generated.resources.location_disabled_message
 import org.jetbrains.compose.resources.getString
 
-class MapViewModel constructor(
+class MapViewModel(
     private val getSavedLocationsInfoUseCase: GetSavedLocationsInfoUseCase,
     private val stopLocationUpdatesUseCase: StopLocationUpdatesUseCase,
     private val startLocationUpdatesUseCase: StartLocationUpdatesUseCase,

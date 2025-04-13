@@ -1,8 +1,8 @@
 package com.richaa2.map.kmp.data.repository
 
-import com.richaa2.map.kmp.core.common.ErrorHandler
-import com.richaa2.map.kmp.data.mapper.RoutesMapper.fromDataToDomain
-import com.richaa2.map.kmp.data.mapper.RoutesMapper.fromDomainToData
+import com.richaa2.map.kmp.core.error.ErrorHandler
+import com.richaa2.map.kmp.data.source.remote.model.mapper.RoutesMapper.fromDataToDomain
+import com.richaa2.map.kmp.data.source.remote.model.mapper.RoutesMapper.fromDomainToData
 import com.richaa2.map.kmp.data.source.remote.RouteNetworkSource
 import com.richaa2.map.kmp.domain.common.Resource
 import com.richaa2.map.kmp.domain.model.ComputeRoute

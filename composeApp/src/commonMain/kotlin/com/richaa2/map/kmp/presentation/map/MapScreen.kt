@@ -24,8 +24,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.richaa2.map.kmp.core.LocationManager
-import com.richaa2.map.kmp.core.LocationPermissionStatus
+import com.richaa2.map.kmp.core.permission.LocationManager
+import com.richaa2.map.kmp.core.permission.LocationPermissionStatus
 import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.domain.model.LocationInfo
 import com.richaa2.map.kmp.presentation.AppViewModel
@@ -71,6 +71,7 @@ fun MapScreen(
             "currentLocation $currentLocation"
         )
     }
+
     LaunchedEffect(Unit) {
         viewModel.onErrorRouteAction.collectLatest {
 

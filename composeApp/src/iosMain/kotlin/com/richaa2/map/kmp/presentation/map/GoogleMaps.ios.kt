@@ -75,7 +75,6 @@ actual fun GoogleMaps(
         mapView.delegate = mapViewDelegate
 
         clusterManager.setMapDelegate(mapViewDelegate as cocoapods.Google_Maps_iOS_Utils.GMSMapViewDelegateProtocol)
-
         clusterManager.clearItems()
         val newItems = savedLocations.map { IOSLocationClusterItem(it) }
         clusterManager.addItems(newItems)
