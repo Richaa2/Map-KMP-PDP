@@ -8,10 +8,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun App() {
-    //TODO DARK THEME FOR MAP
-    //TODO CUSTOM CLUSTER DESIGN (OPTIONAL)
+    //TODO CAMERA POSITION FROM MEMORY
     //TODO PREVIEW
-    //TODO ADD FONTS
+    //TODO CLEAN PROJECT
     MapPDPTheme  {
         AppNavGraph()
     }

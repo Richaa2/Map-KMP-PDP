@@ -1,5 +1,6 @@
 [versions]
 accompanistPermissions = "0.28.0"
+accompanistSystemuicontroller = "0.36.0"
 agp = "8.6.0"
 android-compileSdk = "35"
 android-minSdk = "28"
@@ -39,6 +40,7 @@ uiTextGoogleFonts = "1.7.8"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 feather = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "feather" }
 geo-compose = { module = "dev.icerock.moko:geo-compose", version.ref = "geoCompose" }
 geo = { module = "dev.icerock.moko:geo", version.ref = "geo" }

@@ -76,13 +76,14 @@ actual fun ImagePicker(
                 imageVector = Icons.Filled.Close,
                 contentDescription = "Remove Image",
                 modifier = Modifier
+                    .padding(8.dp)
                     .clickable { onImageRemoved() }
                     .align(Alignment.TopEnd)
                     .background(
                         MaterialTheme.colorScheme.surfaceContainerHighest,
                         MaterialTheme.shapes.small
                     )
-                    .padding(8.dp),
+                    ,
                 tint = MaterialTheme.colorScheme.onSurface
             )
         } else {

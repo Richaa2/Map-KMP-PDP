@@ -88,6 +88,7 @@ kotlin {
             implementation(libs.sqldelight.android)
             implementation(libs.accompanist.permissions)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.accompanist.systemuicontroller)
 
 
         }

@@ -3,15 +3,15 @@ package com.richaa2.map.kmp.presentation.map
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -20,7 +20,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,12 +30,8 @@ import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.domain.model.LocationInfo
 import com.richaa2.map.kmp.presentation.AppViewModel
 import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
-import com.richaa2.map.kmp.presentation.map.camera.CameraPositionStateSaver
 import com.richaa2.map.kmp.presentation.map.components.MapFloatingActionButton
 import com.richaa2.map.kmp.presentation.map.components.PermissionDeniedDialog
-import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_MAP_LATITUDE
-import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_MAP_LONGITUDE
-import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_ZOOM_LEVEL
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Home
 import kotlinx.coroutines.flow.collectLatest
@@ -148,9 +143,9 @@ fun MapScreen(
                     Text(stringResource(text))
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colors.primary,
-                    titleContentColor = MaterialTheme.colors.onPrimary,
-                    actionIconContentColor = MaterialTheme.colors.onPrimary
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary
                 )
             )
         },

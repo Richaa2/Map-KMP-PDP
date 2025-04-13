@@ -1,5 +1,6 @@
 package com.richaa2.map.kmp.presentation.map
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,6 +11,7 @@ import androidx.compose.ui.viewinterop.UIKitInteropInteractionMode
 import androidx.compose.ui.viewinterop.UIKitInteropProperties
 import androidx.compose.ui.viewinterop.UIKitView
 import cocoapods.GoogleMaps.GMSCameraPosition
+import cocoapods.GoogleMaps.GMSMapStyle
 import cocoapods.GoogleMaps.GMSMapView
 import cocoapods.Google_Maps_iOS_Utils.GMUClusterManager
 import cocoapods.Google_Maps_iOS_Utils.GMUDefaultClusterIconGenerator
@@ -24,6 +26,7 @@ import com.richaa2.map.kmp.presentation.map.polyline.PolylineUtils
 import com.richaa2.map.kmp.presentation.map.utils.MapViewDelegate
 import dev.icerock.moko.geo.LatLng
 import kotlinx.cinterop.ExperimentalForeignApi
+import MAP_STYLE_JSON
 
 
 @OptIn(ExperimentalForeignApi::class, ExperimentalComposeUiApi::class)
@@ -61,6 +64,10 @@ actual fun GoogleMaps(
     val mapViewDelegate =
         remember { MapViewDelegate(onMapLongClick, onMarkerClick, cameraPositionState) }
 
+    val isDarkTheme = isSystemInDarkTheme()
+    LaunchedEffect(isDarkTheme) {
+        setMapStyle(mapView, isDarkTheme)
+    }
 
     LaunchedEffect(Unit) {
         cameraPositionState.setNativeMap(mapView)
@@ -109,5 +116,13 @@ actual fun GoogleMaps(
 
         )
 
+}
 
+@OptIn(ExperimentalForeignApi::class)
+private fun setMapStyle(mapView: GMSMapView, isSystemInDarkTheme: Boolean) {
+    if (isSystemInDarkTheme) {
+        mapView.setMapStyle(GMSMapStyle.styleWithJSONString(style = MAP_STYLE_JSON, error = null))
+    } else {
+        mapView.setMapStyle(null)
+    }
 }
