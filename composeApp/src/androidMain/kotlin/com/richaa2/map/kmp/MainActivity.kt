@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.richaa2.map.kmp.core.LocationManager
+import com.richaa2.map.kmp.presentation.App
 import dev.icerock.moko.geo.LocationTracker
 import org.koin.android.ext.android.inject
 

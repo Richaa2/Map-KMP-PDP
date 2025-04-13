@@ -15,5 +15,5 @@ expect fun GoogleMaps(
     onMapLongClick: (LatLong) -> Unit,
     cameraPositionState: CameraPositionState,
     isLocationPermissionGranted: Boolean,
-    polylineCoordinates: List<LatLng>?,
+    routeCoordinates: List<LatLng>?,
 )

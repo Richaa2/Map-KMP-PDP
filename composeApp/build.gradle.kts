@@ -166,6 +166,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
+dependencies {
+    implementation(libs.androidx.ui.text.google.fonts)
+}
 
 secrets {
     propertiesFileName = "secrets.properties"

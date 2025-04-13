@@ -16,6 +16,7 @@ import com.richaa2.map.kmp.domain.model.LocationInfo
 import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
 import com.richaa2.map.kmp.presentation.map.clustering.LocationClusterItem
 import com.richaa2.map.kmp.presentation.map.clustering.LocationClustering
+import com.richaa2.map.kmp.presentation.map.marker.MarkerUtils
 import com.richaa2.map.kmp.presentation.map.polyline.PolylineUtils
 import com.richaa2.map.kmp.presentation.map.polyline.PolylineUtils.fitCameraToPolyline
 import dev.icerock.moko.geo.LatLng
@@ -30,7 +31,7 @@ actual fun GoogleMaps(
     onMapLongClick: (LatLong) -> Unit,
     cameraPositionState: CameraPositionState,
     isLocationPermissionGranted: Boolean,
-    polylineCoordinates: List<LatLng>?
+    routeCoordinates: List<LatLng>?
 ) {
 
     val nativeCameraPositionState = rememberCameraPositionState()
@@ -68,10 +69,11 @@ actual fun GoogleMaps(
             cameraPositionState.setNativeMap(it)
         }
 
-        MapEffect(polylineCoordinates) {
-            if (polylineCoordinates?.isNotEmpty() == true) {
-                PolylineUtils.drawPolyline(coordinates = polylineCoordinates, map = it)
-                fitCameraToPolyline(polylineCoordinates, it)
+        MapEffect(routeCoordinates) {
+            if (routeCoordinates?.isNotEmpty() == true) {
+                PolylineUtils.drawPolyline(coordinates = routeCoordinates, map = it)
+                fitCameraToPolyline(routeCoordinates, it)
+                MarkerUtils.addRouteMarkers(routeCoordinates, it)
 
             }
         }

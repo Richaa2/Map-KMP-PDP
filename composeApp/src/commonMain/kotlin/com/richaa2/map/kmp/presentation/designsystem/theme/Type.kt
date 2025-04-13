@@ -1,16 +1,14 @@
-//package com.richaa2.mappdp.designsystem.theme
-//
-//import androidx.compose.material3.Typography
-//import androidx.compose.ui.text.font.FontFamily
-//
-//import androidx.compose.ui.text.googlefonts.GoogleFont
-//import androidx.compose.ui.text.googlefonts.Font
-//import com.richaa2.mappdp.R
+package com.richaa2.mappdp.designsystem.theme
+
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import mapkmp.composeapp.generated.resources.Res
 //
 //val provider = GoogleFont.Provider(
 //    providerAuthority = "com.google.android.gms.fonts",
 //    providerPackage = "com.google.android.gms",
-//    certificates = R.array.com_google_android_gms_fonts_certs
+//    certificates = Res.array.com_google_android_gms_fonts_certs
 //)
 //
 //val bodyFontFamily = FontFamily(
@@ -26,9 +24,9 @@
 //        fontProvider = provider,
 //    )
 //)
-//
-//// Default Material 3 typography values
-//val baseline = Typography()
+
+// Default Material 3 typography values
+val baseline = Typography()
 //
 //val AppTypography = Typography(
 //    displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily),

@@ -1,4 +1,4 @@
-package com.richaa2.map.kmp.dependecies
+package com.richaa2.map.kmp.data.source.local
 
 import app.cash.sqldelight.db.SqlDriver
 import com.richaa2.db.AppDatabase

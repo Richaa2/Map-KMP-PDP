@@ -28,16 +28,7 @@ class MapViewModel constructor(
     private val stopLocationUpdatesUseCase: StopLocationUpdatesUseCase,
     private val startLocationUpdatesUseCase: StartLocationUpdatesUseCase,
     private val getRoutesUseCase: GetRoutesUseCase,
-    getCurrentLocationUseCase: GetCurrentLocationUseCase,
 ) : ViewModel() {
-
-    val currentLocation: StateFlow<LatLong?> = getCurrentLocationUseCase()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null
-        )
-
     private val _uiState = MutableStateFlow<MapUiState>(MapUiState.Loading)
     val uiState: StateFlow<MapUiState> = _uiState.asStateFlow()
 

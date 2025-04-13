@@ -1,4 +1,4 @@
-package com.richaa2.map.kmp.dependecies
+package com.richaa2.map.kmp.platform
 
 import android.content.Context
 

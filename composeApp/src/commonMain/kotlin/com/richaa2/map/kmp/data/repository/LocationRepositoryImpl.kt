@@ -11,15 +11,12 @@ import dev.icerock.moko.geo.LocationTracker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
@@ -29,6 +26,7 @@ class LocationRepositoryImpl(
     private val locationTracker: LocationTracker,
 
     ) : LocationRepository {
+    private var _currentLocation: Flow<LatLong>? = null
 
     override suspend fun getLocationInfoById(id: Long): Resource<LocationInfo?> {
         return withContext(Dispatchers.IO) {
@@ -78,11 +76,10 @@ class LocationRepositoryImpl(
     }
 
     override fun getCurrentLocation(): Flow<LatLong> {
-        return locationTracker.getLocationsFlow()
+        return _currentLocation ?: locationTracker.getLocationsFlow()
             .distinctUntilChanged()
-            .map { location ->
-                LatLong(location.latitude, location.longitude)
-            }
+            .map { location -> LatLong(location.latitude, location.longitude) }
+            .also { _currentLocation = it }
 
     }
 

@@ -29,6 +29,7 @@ import com.richaa2.map.kmp.core.LocationManager
 import com.richaa2.map.kmp.core.LocationPermissionStatus
 import com.richaa2.map.kmp.domain.model.LatLong
 import com.richaa2.map.kmp.domain.model.LocationInfo
+import com.richaa2.map.kmp.presentation.AppViewModel
 import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
 import com.richaa2.map.kmp.presentation.map.camera.CameraPositionStateSaver
 import com.richaa2.map.kmp.presentation.map.components.MapFloatingActionButton
@@ -52,11 +53,13 @@ import org.koin.core.annotation.KoinExperimentalAPI
 @OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
 fun MapScreen(
-    viewModel: MapViewModel = koinViewModel(),
     locationManager: LocationManager = koinInject(),
+    viewModel: MapViewModel = koinViewModel(),
+    appViewModel: AppViewModel,
     userPosition: LatLong?,
     routePosition: LatLong?,
-    onMapScreen: () -> Unit,
+    cameraPositionState: CameraPositionState,
+    onMapScreen: (LatLong?) -> Unit,
     onAddLocation: (LatLong) -> Unit,
     onLocationDetails: (LocationInfo, LatLong?) -> Unit,
 ) {
@@ -67,7 +70,7 @@ fun MapScreen(
 
     var showPermissionDialog by remember { mutableStateOf(false) }
 
-    val currentLocation by viewModel.currentLocation.collectAsState()
+    val currentLocation by appViewModel.currentLocation.collectAsState(initial = userPosition)
     LaunchedEffect(currentLocation) {
         println(
             "currentLocation $currentLocation"
@@ -116,13 +119,7 @@ fun MapScreen(
         }
     }
 
-    val cameraPositionState = rememberSaveable(saver = CameraPositionStateSaver) {
-        CameraPositionState(
-            initialLatitude = DEFAULT_MAP_LATITUDE,
-            initialLongitude = DEFAULT_MAP_LONGITUDE,
-            initialZoom = DEFAULT_ZOOM_LEVEL
-        )
-    }
+
 
     Scaffold(
         modifier = Modifier,
@@ -132,7 +129,7 @@ fun MapScreen(
                 navigationIcon = {
                     if (uiState is MapViewModel.MapUiState.RouteSuccess) {
                         IconButton(
-                            onClick = { onMapScreen() }
+                            onClick = { onMapScreen(currentLocation) }
                         ) {
                             Icon(
                                 imageVector = FeatherIcons.Home,
@@ -194,7 +191,7 @@ fun MapScreen(
                         },
                         cameraPositionState = cameraPositionState,
                         isLocationPermissionGranted = permissionStatus == LocationPermissionStatus.ACCEPTED,
-                        polylineCoordinates = (uiState as? MapViewModel.MapUiState.RouteSuccess)?.routes
+                        routeCoordinates = (uiState as? MapViewModel.MapUiState.RouteSuccess)?.routes
 
                     )
                 }
