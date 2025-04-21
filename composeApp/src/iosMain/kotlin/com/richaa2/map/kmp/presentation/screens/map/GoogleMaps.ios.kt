@@ -117,7 +117,6 @@ actual fun GoogleMaps(
     UIKitView(
         modifier = modifier.fillMaxSize(),
         factory = {
-            println("factory mapView")
             mapView.apply {
                 settings.compassButton = false
                 delegate = mapViewDelegate
@@ -125,7 +124,6 @@ actual fun GoogleMaps(
             }
         },
         update = {
-            println("update mapView")
             clusterManager.clearItems()
             val newItems = savedLocations.map { IOSLocationClusterItem(it) }
             clusterManager.addItems(newItems)
