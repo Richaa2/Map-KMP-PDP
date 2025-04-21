@@ -1,12 +1,10 @@
-import org.gradle.declarative.dsl.schema.FqName.Empty.packageName
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-//    alias(libs.plugins.room)
     alias(libs.plugins.ksp)
     alias(libs.plugins.secrets)
     alias(libs.plugins.kotlinCocoapods)
@@ -29,11 +27,7 @@ kotlin {
     sourceSets.commonMain {
         kotlin.srcDir("build/generated/ksp/metadata")
     }
-//    androidTarget {
-//        compilerOptions {
-//            jvmTarget.set(JvmTarget.JVM_11)
-//        }
-//    }
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -50,6 +44,9 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+
+            export(projects.mapKMP)
+
         }
     }
     cocoapods {
@@ -89,9 +86,19 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
             implementation(libs.sqldelight.android)
+            implementation(libs.accompanist.permissions)
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.accompanist.systemuicontroller)
+
 
         }
         commonMain.dependencies {
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.encoding)
+
             implementation(libs.geo)
             implementation(libs.geo.compose)
 
@@ -117,16 +124,18 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.lifecycle.viewmodel)
             implementation(libs.navigation.compose)
+            implementation(libs.feather)
 
         }
         iosMain.dependencies {
             implementation(libs.sqldelight.native)
+            implementation(libs.ktor.client.darwin)
+
         }
     }
 }
-//ksp {
-//    arg("room.schemaLocation", "${projectDir}/schemas")
-//}
+
+
 android {
 
     namespace = "com.richaa2.map.kmp"
@@ -158,30 +167,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
-
-//room {
-//    schemaDirectory("$projectDir/schemas")
-//}
 dependencies {
-    //    implementation(libs.play.services.maps)
-//    implementation(libs.androidx.material3.android)
-//    implementation(libs.androidx.room.ktx)
-//    ksp(libs.androidx.room.compiler)
-//    add("kspAndroid", libs.androidx.room.compiler)
-//    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
-//    add("kspIosArm64", libs.androidx.room.compiler)
-//    add("kspCommonMainMetadata", libs.androidx.room.compiler)
-
-
+    implementation(libs.androidx.ui.text.google.fonts)
 }
-//ksp {
-//    arg("room.schemaLocation", "${projectDir}/schemas")
-//}
-//tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
-//    if (name != "kspCommonMainKotlinMetadata") {
-//        dependsOn("kspCommonMainKotlinMetadata")
-//    }
-//}
+
 secrets {
     propertiesFileName = "secrets.properties"
     defaultPropertiesFileName = "secrets.defaults.properties"

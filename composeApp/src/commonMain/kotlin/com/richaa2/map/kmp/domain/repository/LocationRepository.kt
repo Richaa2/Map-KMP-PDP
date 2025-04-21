@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocationRepository {
     suspend fun getLocationInfoById(id: Long): Resource<LocationInfo?>
-    fun getSavedLocationsInfo(): Flow<Resource<List<LocationInfo>>>
     suspend fun upsertLocation(locationInfo: LocationInfo): Resource<Unit>
     suspend fun deleteLocationInfoById(id: Long): Resource<Unit>
-    fun getCurrentLocation(): Flow<LatLong>
-    fun stopLocationUpdates()
     suspend fun startLocationUpdates()
+    fun stopLocationUpdates()
+    fun getCurrentLocation(): Flow<LatLong>
+    fun getSavedLocationsInfo(): Flow<Resource<List<LocationInfo>>>
 }

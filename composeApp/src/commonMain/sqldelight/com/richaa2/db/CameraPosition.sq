@@ -1,0 +1,15 @@
+CREATE TABLE camera_position (
+  id INTEGER NOT NULL PRIMARY KEY CHECK(id = 0),
+  latitude REAL NOT NULL,
+  longitude REAL NOT NULL,
+  zoom REAL NOT NULL
+);
+
+insertOrReplaceCameraPosition:
+INSERT OR REPLACE INTO camera_position (id, latitude, longitude, zoom)
+VALUES (0, ?, ?, ?);
+
+selectCameraPosition:
+SELECT *
+FROM camera_position
+WHERE id = 0;
