@@ -4,7 +4,7 @@ import com.richaa2.map.kmp.data.source.remote.model.LatLngWrapper
 import com.richaa2.map.kmp.data.source.remote.model.RouteData
 import com.richaa2.map.kmp.domain.model.ComputeRoute
 import com.richaa2.map.kmp.domain.model.LatLong
-import com.richaa2.map.kmp.presentation.map.polyline.PolylineUtils
+import com.richaa2.map.kmp.presentation.screens.map.polyline.PolylineUtils
 
 object RoutesMapper {
 

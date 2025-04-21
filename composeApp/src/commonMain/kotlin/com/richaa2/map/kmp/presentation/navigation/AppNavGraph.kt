@@ -1,39 +1,24 @@
 package com.richaa2.map.kmp.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.richaa2.map.kmp.domain.model.LatLong
-import com.richaa2.map.kmp.presentation.AppViewModel
-import com.richaa2.map.kmp.presentation.addLocation.AddLocationScreen
-import com.richaa2.map.kmp.presentation.locationDetails.LocationDetailsScreen
-import com.richaa2.map.kmp.presentation.map.MapScreen
-import com.richaa2.map.kmp.presentation.map.camera.CameraPositionState
-import com.richaa2.map.kmp.presentation.map.camera.CameraPositionStateSaver
-import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_MAP_LATITUDE
-import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_MAP_LONGITUDE
-import com.richaa2.map.kmp.presentation.map.utils.DEFAULT_ZOOM_LEVEL
+import com.richaa2.map.kmp.presentation.app.AppViewModel
+import com.richaa2.map.kmp.presentation.screens.addLocation.AddLocationScreen
+import com.richaa2.map.kmp.presentation.screens.locationDetails.LocationDetailsScreen
+import com.richaa2.map.kmp.presentation.screens.map.MapScreen
+import com.richaa2.map.kmp.presentation.screens.map.camera.CameraPositionState
 import com.richaa2.mappdp.navigation.Screen
-import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
 
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
-fun AppNavGraph() {
-    val appViewModel: AppViewModel = koinViewModel()
-
-    val cameraPositionState = rememberSaveable(saver = CameraPositionStateSaver) {
-        CameraPositionState(
-            initialLatitude = DEFAULT_MAP_LATITUDE,
-            initialLongitude = DEFAULT_MAP_LONGITUDE,
-            initialZoom = DEFAULT_ZOOM_LEVEL
-        )
-    }
-
+fun AppNavGraph(
+    appViewModel: AppViewModel,
+    cameraPositionState: CameraPositionState,
+) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.Map()) {
         composable<Screen.Map> { backStackEntry ->
@@ -73,7 +58,9 @@ fun AppNavGraph() {
                             userPositionLongitude = it?.longitude?.toFloat()
                         )
                     )
-                }
+                },
+                getCameraPosition = appViewModel::getCameraPosition,
+                onSaveCameraPosition = appViewModel::saveCameraPosition,
             )
         }
         composable<Screen.AddLocation> { backStackEntry ->

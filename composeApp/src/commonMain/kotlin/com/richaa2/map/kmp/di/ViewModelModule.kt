@@ -1,9 +1,9 @@
 package com.richaa2.map.kmp.di
 
-import com.richaa2.map.kmp.presentation.AppViewModel
-import com.richaa2.map.kmp.presentation.addLocation.AddLocationViewModel
-import com.richaa2.map.kmp.presentation.map.MapViewModel
-import com.richaa2.map.kmp.presentation.locationDetails.LocationDetailsViewModel
+import com.richaa2.map.kmp.presentation.app.AppViewModel
+import com.richaa2.map.kmp.presentation.screens.addLocation.AddLocationViewModel
+import com.richaa2.map.kmp.presentation.screens.map.MapViewModel
+import com.richaa2.map.kmp.presentation.screens.locationDetails.LocationDetailsViewModel
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 

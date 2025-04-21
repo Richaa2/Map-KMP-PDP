@@ -1,7 +1,7 @@
 package com.richaa2.map.kmp.data.repository
 
 import com.richaa2.map.kmp.core.error.ErrorHandler
-import com.richaa2.map.kmp.data.source.local.LocationDataSourceImpl
+import com.richaa2.map.kmp.data.source.LocalSource
 import com.richaa2.map.kmp.data.source.local.model.mapper.LocationMapper.fromDomainToLocal
 import com.richaa2.map.kmp.data.source.local.model.mapper.LocationMapper.fromLocalToDomain
 import com.richaa2.map.kmp.data.source.local.model.mapper.LocationMapper.fromSqldelightToLocal
@@ -18,12 +18,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 
 class LocationRepositoryImpl(
-    private val locationDataSourceImpl: LocationDataSourceImpl,
+    private val localSource: LocalSource,
     private val errorHandler: ErrorHandler,
     private val locationTracker: LocationTracker,
 
@@ -34,7 +35,7 @@ class LocationRepositoryImpl(
         return withContext(Dispatchers.IO) {
             try {
                 Resource.Success(
-                    locationDataSourceImpl.getLocationById(id)?.fromSqldelightToLocal()
+                    localSource.getLocationById(id)?.fromSqldelightToLocal()
                         ?.fromLocalToDomain()
                 )
             } catch (e: Exception) {
@@ -45,7 +46,7 @@ class LocationRepositoryImpl(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getSavedLocationsInfo(): Flow<Resource<List<LocationInfo>>> {
-        return locationDataSourceImpl.getAllLocations()
+        return localSource.getAllLocations()
             .flatMapLatest { entities ->
                 flow {
                     emit(Resource.Loading)
@@ -61,11 +62,10 @@ class LocationRepositoryImpl(
 
     override suspend fun upsertLocation(locationInfo: LocationInfo): Resource<Unit> {
         return try {
-            println("${locationInfo.id.let { locationDataSourceImpl.isExistLocationById(it) }}")
-            if (locationInfo.id.let { locationDataSourceImpl.isExistLocationById(it) }) {
-                locationDataSourceImpl.updateLocation(locationInfo.fromDomainToLocal())
+            if (locationInfo.id.let { localSource.isExistLocationById(it) }) {
+                localSource.updateLocation(locationInfo.fromDomainToLocal())
             } else {
-                locationDataSourceImpl.insertLocation(locationInfo.fromDomainToLocal())
+                localSource.insertLocation(locationInfo.fromDomainToLocal())
             }
             Resource.Success(Unit)
         } catch (e: Exception) {
@@ -75,7 +75,7 @@ class LocationRepositoryImpl(
 
     override suspend fun deleteLocationInfoById(id: Long): Resource<Unit> {
         return try {
-            locationDataSourceImpl.deleteLocationById(id)
+            localSource.deleteLocationById(id)
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(errorHandler.getErrorMessage(e), e)
@@ -84,6 +84,7 @@ class LocationRepositoryImpl(
 
     override fun getCurrentLocation(): Flow<LatLong> {
         return _currentLocation ?: locationTracker.getLocationsFlow()
+            .flowOn(Dispatchers.IO)
             .distinctUntilChanged()
             .map { location -> LatLong(location.latitude, location.longitude) }
             .also { _currentLocation = it }

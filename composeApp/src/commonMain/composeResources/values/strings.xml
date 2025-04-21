@@ -34,4 +34,9 @@
     <string name="content_not_found">Content not found</string>
     <string name="user_position_not_found">User position not found</string>
     <string name="route_to_location">Route to location</string>
+    <string name="tap_to_select_image">Tap to select image</string>
+    <string name="end">End</string>
+    <string name="start">Start</string>
+
+
 </resources>

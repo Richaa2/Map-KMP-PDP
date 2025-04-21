@@ -13,6 +13,7 @@
 		6364695306ED8C33531FEF21 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2EB265178AA53DFB9E173AA /* Pods_iosApp.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		793F705C2D92132100F1DC9B /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 793F705B2D92131E00F1DC9B /* Secrets.plist */; };
+		79527BFA2DB5878300C5B33A /* map_style_dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 79527BF92DB5878300C5B33A /* map_style_dark.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		793F705B2D92131E00F1DC9B /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Secrets.plist; sourceTree = "<group>"; };
+		79527BF92DB5878300C5B33A /* map_style_dark.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = map_style_dark.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.json; };
 		9A84267C08939EC09EFD54EC /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 		AB3632DC29227652001CCB65 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		C2EB265178AA53DFB9E173AA /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +81,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				79527BF82DB5870600C5B33A /* Resources */,
 				793F705B2D92131E00F1DC9B /* Secrets.plist */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* ContentView.swift */,
@@ -87,6 +90,14 @@
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 			);
 			path = iosApp;
+			sourceTree = "<group>";
+		};
+		79527BF82DB5870600C5B33A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				79527BF92DB5878300C5B33A /* map_style_dark.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		A5AB7E57A23B26B867A25A8A /* Pods */ = {
@@ -170,6 +181,7 @@
 			files = (
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
 				793F705C2D92132100F1DC9B /* Secrets.plist in Resources */,
+				79527BFA2DB5878300C5B33A /* map_style_dark.json in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
